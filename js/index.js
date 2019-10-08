@@ -1,5 +1,5 @@
 Vue.component('version-item', {
-    props: ['version', 'vid'],
+    props: ['version', 'vid', 'show_id'],
     template: `
     <div class="vertcal-timeline-item vertical-timeline-element">
       <div>
@@ -7,7 +7,7 @@ Vue.component('version-item', {
           <i class="badge-timeline badge-dot badge-dot-xl badge-success"></i>
         </span>
         <div class="vertical-timeline-element-content">
-          <h4 class="timeline-title">{{ version.message }}</h4>
+          <h4 class="timeline-title">"{{ version.message }}" <span class="version-id">{{ show_id ? vid : '' }}</span></h4>
           <p><b>{{ version.author }}</b> committed at {{ version.date }}</p>
         </div>
       </div>
@@ -18,6 +18,7 @@ Vue.component('version-item', {
 var app = new Vue({
     el: '#app',
     data: {
+      show_ids: false,
       versions: {
         "db244f6be3791d72c94b099fde8db2915c6a7041": { author: "Solid Snake", message: "Initial commit", date: new Date('2011-04-11T10:20:30Z') },
         "816590924a31e92959281353dda3ce5b3f70bf44": { author: "Liquid Snake", message: "Something fixed", date: new Date('2011-04-13T10:20:30Z') }
@@ -29,3 +30,5 @@ var app = new Vue({
         }
     }
 })
+
+Vue.config.devtools = true

@@ -14,11 +14,15 @@
   </head>
   <body>
     <div id="app">
+      <div class="container">
+        <input type="checkbox" v-model="show_ids">Show IDs</input>
+      </div>
       <div class="vertical-without-time vertical-timeline vertical-timeline--one-column">
         <version-item
             v-for="(item, hash) in versions"
             v-bind:version="item"
             v-bind:vid="hash"
+            v-bind:show_id="show_ids"
         ></version-item>
       </div>
     </div>
