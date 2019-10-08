@@ -19,7 +19,7 @@
       </div>
       <div class="vertical-without-time vertical-timeline vertical-timeline--one-column">
         <version-item
-            v-for="(item, hash) in versions"
+            v-for="(item, hash) in orderedVersions"
             v-bind:version="item"
             v-bind:vid="hash"
             v-bind:show_id="show_ids"

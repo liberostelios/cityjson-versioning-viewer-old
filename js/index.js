@@ -21,12 +21,22 @@ var app = new Vue({
       show_ids: false,
       versions: {
         "db244f6be3791d72c94b099fde8db2915c6a7041": { author: "Solid Snake", message: "Initial commit", date: new Date('2011-04-11T10:20:30Z') },
-        "816590924a31e92959281353dda3ce5b3f70bf44": { author: "Liquid Snake", message: "Something fixed", date: new Date('2011-04-13T10:20:30Z') }
+        "816590924a31e92959281353dda3ce5b3f70bf44": { author: "Liquid Snake", message: "Something fixed", date: new Date('2011-04-13T10:20:30Z') },
       }
     },
     computed: {
         orderedVersions: function() {
-            return _.orderBy(this.versions, 'date', 'desc');
+            return _.chain(this.versions)
+            .map(function (val, key) {
+              return { version_id: key, version_info: val };
+            })
+            .sortBy(function(o) {
+              return o.version_info.date;
+            })
+            .reverse()
+            .keyBy('version_id')
+            .mapValues('version_info')
+            .value();
         }
     }
 })
