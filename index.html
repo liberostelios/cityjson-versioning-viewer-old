@@ -13,33 +13,17 @@
     <title>Hello, world!</title>
   </head>
   <body>
-    <div id="app" class="container">
-        <div class="row">
-            <div class="col">
-                <ul class="list-group">
-                    <version-item
-                        v-for="(item, hash) in versions"
-                        v-bind:version="item"
-                        v-bind:vid="hash"
-                    ></version-item>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="vertical-without-time vertical-timeline vertical-timeline--one-column">
-      <div class="vertcal-timeline-item vertical-timeline-element">
-          <div>
-            <span class="vertical-timeline-element-icon">
-              <i class="badge-timeline badge-dot badge-dot-xl badge-success"></i>
-            </span>
-            <div class="vertical-timeline-element-content">
-              <h4 class="timeline-title">Something here</h4>
-              <p>Something other here</p>
-            </div>
-          </div>
+    <div id="app">
+      <div class="vertical-without-time vertical-timeline vertical-timeline--one-column">
+        <version-item
+            v-for="(item, hash) in versions"
+            v-bind:version="item"
+            v-bind:vid="hash"
+        ></version-item>
       </div>
     </div>
+
+    
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

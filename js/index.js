@@ -1,6 +1,18 @@
 Vue.component('version-item', {
     props: ['version', 'vid'],
-    template: '<li class="list-group-item"><div><p class="h5">{{ version.message }} (<span class="version-id">{{ vid | truncate(8) }}</span>)</p><footer class="version-info"><b>{{ version.author }}</b> committed on {{ version.date }}</footer></li>'
+    template: `
+    <div class="vertcal-timeline-item vertical-timeline-element">
+      <div>
+        <span class="vertical-timeline-element-icon">
+          <i class="badge-timeline badge-dot badge-dot-xl badge-success"></i>
+        </span>
+        <div class="vertical-timeline-element-content">
+          <h4 class="timeline-title">{{ version.message }}</h4>
+          <p><b>{{ version.author }}</b> committed at {{ version.date }}</p>
+        </div>
+      </div>
+    </div>
+    `
 })
 
 var app = new Vue({
