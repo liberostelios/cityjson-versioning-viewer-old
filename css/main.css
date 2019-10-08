@@ -1,0 +1,10 @@
+.version-id {
+    font-weight: normal;
+    color: blue;
+}
+.version-message {
+    font-weight: bold
+}
+.version-info {
+    color: slategray
+}
