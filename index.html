@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/timeline.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/bc945c94ff.js" crossorigin="anonymous"></script>
 
     <title>CityJSON versioning viewer</title>
   </head>
@@ -34,17 +35,12 @@
                     v-for="(item, hash) in orderedVersions(active_branch)"
                     v-bind:version="item"
                     v-bind:vid="hash"
-                    v-bind:show_id="show_ids"
                 ></version-item>
               </div>
               <div class="card">
                 <div class="card-header bg-primary border-primary text-white">Settings</div>
                 <div class="card-body">
-                  <div class="form-check">
-                    <input type="checkbox" class="form-check-input" v-model="show_ids" id="showIdsCheck">
-                    <label class="form-check-label" for="showIdsCheck">Show IDs</label>
-                  </div>
-                  <button type="button" class="btn btn-secondary" v-on:click="reset">Start over</button>
+                  <button type="button" class="btn btn-outline-danger" v-on:click="reset"><i class="fas fa-redo"></i> Start over</button>
                 </div>
               </div>
             </main>

@@ -1,12 +1,20 @@
 Vue.component('version-item', {
-    props: ['version', 'vid', 'show_id'],
+    props: ['version', 'vid'],
     template: `
     <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
       <div class="d-flex justify-content-between">
+        <div class="col-9">
           <h5 class="mb-1">{{ version.message }}</h5>
-          <small>{{ show_id ? vid : '' }}</small>
-          </div>
           <small class="text-muted"><b>{{ version.author }}</b> committed at {{ version.date }}.</small>
+        </div>
+        <div class="col-3 pr-0 align-self-center">
+          <div class="input-group input-group-sm justify-content-end">
+            <span class="input-group-text text-monospace" id="basic-addon1"><small>{{ vid | truncate(7) }}</small></span>
+            <div class="input-group-append">
+              <button class="btn btn-outline-primary" type="button"><i class="fas fa-download"></i></span></button>
+            </div>
+          </div>
+        </div>
       </div>
     </a>
     `
@@ -16,7 +24,6 @@ var app = new Vue({
     el: '#app',
     data: {
       file_loaded: false,
-      show_ids: true,
       active_branch: "master",
       versioning: {
         versions: {
