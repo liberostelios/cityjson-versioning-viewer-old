@@ -4,7 +4,7 @@ Vue.component('version-item', {
     <div class="list-group-item list-group-item-action flex-column align-items-start">
       <div class="d-flex justify-content-between">
         <div class="col-9">
-          <h5 class="mb-1">{{ version.message }}</h5>
+          <h6 class="mb-1">{{ version.message }} <span class="badge badge-secondary">{{ version.objects.length }} objects</span></h6>
           <small class="text-muted"><b>{{ version.author }}</b> committed at {{ version.date }}.</small>
         </div>
         <div class="col-3 pr-0 align-self-center">
