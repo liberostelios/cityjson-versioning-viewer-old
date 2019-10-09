@@ -41,6 +41,10 @@ var app = new Vue({
         }
     },
     methods: {
+      reset() {
+        this.versions = {};
+        this.file_loaded = false;
+      },
       selectedFile() {
         console.log("Selected a CityJSON file...");
         console.log(this.$refs.cityJSONFile.files[0]);

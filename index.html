@@ -15,9 +15,6 @@
   <body>
     <div id="app">
       <div v-if="file_loaded">
-        <div class="container">
-          <input type="checkbox" v-model="show_ids">Show IDs</input>
-        </div>
         <div class="vertical-without-time vertical-timeline vertical-timeline--one-column">
           <version-item
               v-for="(item, hash) in orderedVersions"
@@ -26,6 +23,14 @@
               v-bind:show_id="show_ids"
           ></version-item>
         </div>
+        <div class="container">
+            <h2>Settings</h2>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" v-model="show_ids" id="showIdsCheck">
+              <label class="form-check-label" for="showIdsCheck">Show IDs</label>
+            </div>
+            <button type="button" class="btn btn-dark" v-on:click="reset">Start over</button>
+          </div>
       </div>
       <div v-else>
         <div class="container">
