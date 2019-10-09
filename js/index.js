@@ -120,13 +120,17 @@ var app = new Vue({
 
         var result = $.extend({}, this.citymodel);
 
+        result["CityObjects"] = {};
+
         delete result["versioning"];
 
-        for (var key in result["CityObjects"])
+        for (var key in this.citymodel["CityObjects"])
         {
-          if (cityobjects.indexOf(key) == -1)
+          if (cityobjects.indexOf(key) != -1)
           {
-            delete result["CityObjects"][key];
+            var new_key = this.citymodel["CityObjects"][key]["cityobject_id"];
+            result["CityObjects"][new_key] = this.citymodel["CityObjects"][key];
+            delete result["CityObjects"][new_key]["cityobject_id"];
           }
         }
 
