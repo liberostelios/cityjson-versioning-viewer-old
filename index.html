@@ -16,18 +16,20 @@
     <div id="app">
       <nav class="navbar navbar-dark bg-dark">
           <a class="navbar-brand" href="#">vCityJSON Viewer</a>
-          <form class="form-inline my-2 my-lg-0" v-if="file_loaded">
-            <label class="navbar-text" for="branchSelect">Branch:</label>
-            <select class="form-control" id="branchSelect" v-model="active_branch">
-              <option v-for="(version, branch) in versioning.branches">{{ branch }}</option>
-            </select>
-          </form>
       </nav>
       <div v-if="file_loaded">
         <div class="container">
           <div class="row">
             <main class="col-12 py-md-3">
-              <div class="list-group">
+              <div class="form-inline input-group my-2 my-lg-0">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text" for="branchSelect">Branch</label>
+                  </div>
+                  <select class="custom-select" id="branchSelect" v-model="active_branch">
+                    <option v-for="(version, branch) in versioning.branches">{{ branch }}</option>
+                  </select>
+                </div>
+              <div class="list-group py-md-2">
                 <version-item
                     v-for="(item, hash) in orderedVersions(active_branch)"
                     v-bind:version="item"
