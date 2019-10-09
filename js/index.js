@@ -1,17 +1,14 @@
 Vue.component('version-item', {
     props: ['version', 'vid', 'show_id'],
     template: `
-    <div class="vertcal-timeline-item vertical-timeline-element">
-      <div>
-        <span class="vertical-timeline-element-icon">
-          <i class="badge-timeline badge-dot badge-dot-xl badge-success"></i>
-        </span>
-        <div class="vertical-timeline-element-content">
-          <h4 class="timeline-title">"{{ version.message }}" <span class="version-id">{{ show_id ? vid : '' }}</span></h4>
-          <p><b>{{ version.author }}</b> committed at {{ version.date }}</p>
-        </div>
+    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="d-flex justify-content-between">
+          <h5 class="mb-1">{{ version.message }}</h5>
+          <small>{{ show_id ? vid : '' }}</small>
+          </div>
+          <small class="text-muted"><b>{{ version.author }}</b> committed at {{ version.date }}.</small>
       </div>
-    </div>
+    </a>
     `
 })
 
