@@ -15,9 +15,17 @@
   <body>
     <div id="app">
       <div v-if="file_loaded">
+        <div class="container">
+          <div class="form-group">
+            <label for="branchSelect">Branch:</label>
+            <select class="form-control" id="branchSelect" v-model="active_branch">
+              <option v-for="(version, branch) in versioning.branches">{{ branch }}</option>
+            </select>  
+          </div>
+        </div>
         <div class="vertical-without-time vertical-timeline vertical-timeline--one-column">
           <version-item
-              v-for="(item, hash) in orderedVersions"
+              v-for="(item, hash) in orderedVersions(active_branch)"
               v-bind:version="item"
               v-bind:vid="hash"
               v-bind:show_id="show_ids"

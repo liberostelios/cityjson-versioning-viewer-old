@@ -20,27 +20,33 @@ var app = new Vue({
     data: {
       file_loaded: false,
       show_ids: false,
-      versions: {
-        "db244f6be3791d72c94b099fde8db2915c6a7041": { author: "Solid Snake", message: "Initial commit", date: new Date('2011-04-11T10:20:30Z') },
-        "816590924a31e92959281353dda3ce5b3f70bf44": { author: "Liquid Snake", message: "Something fixed", date: new Date('2011-04-13T10:20:30Z') },
+      active_branch: "master",
+      versioning: {
+        versions: {
+          "db244f6be3791d72c94b099fde8db2915c6a7041": { author: "Solid Snake", message: "Initial commit", date: new Date('2011-04-11T10:20:30Z'), parents: [] },
+          "816590924a31e92959281353dda3ce5b3f70bf44": { author: "Liquid Snake", message: "Something fixed", date: new Date('2011-04-13T10:20:30Z'), parents: [ "db244f6be3791d72c94b099fde8db2915c6a7041" ] },
+        },
+        branches: {
+          "master": "db244f6be3791d72c94b099fde8db2915c6a7041",
+          "develop": "816590924a31e92959281353dda3ce5b3f70bf44"
+        }
       }
     },
-    computed: {
-        orderedVersions: function() {
-            return _.chain(this.versions)
-            .map(function (val, key) {
-              return { version_id: key, version_info: val };
-            })
-            .sortBy(function(o) {
-              return o.version_info.date;
-            })
-            .reverse()
-            .keyBy('version_id')
-            .mapValues('version_info')
-            .value();
-        }
-    },
     methods: {
+      orderedVersions(branch) {
+        result = {};
+
+        current_vid = this.versioning.branches[branch];
+        result[current_vid] = this.versioning.versions[current_vid];
+
+        while ("parents" in result[current_vid] && result[current_vid].parents.length > 0)
+        {
+          current_vid = result[current_vid].parents[0];
+          result[current_vid] = this.versioning.versions[current_vid];
+        }
+
+        return result;
+      },
       reset() {
         this.versions = {};
         this.file_loaded = false;
@@ -67,7 +73,8 @@ var app = new Vue({
             for (var key in versions){
               versions[key]["date"] = new Date(versions[key]["date"]);
             }
-            this.versions = versions;
+            this.versioning.versions = versions;
+            this.versioning.branches = cm.versioning.branches;
             this.file_loaded = true;
           }
           else
