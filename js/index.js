@@ -16,7 +16,7 @@ var app = new Vue({
     el: '#app',
     data: {
       file_loaded: false,
-      show_ids: false,
+      show_ids: true,
       active_branch: "master",
       versioning: {
         versions: {
