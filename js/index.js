@@ -67,6 +67,7 @@ var app = new Vue({
       },
       reset() {
         this.versions = {};
+        this.active_branch = "master";
         this.file_loaded = false;
       },
       selectedFile() {
