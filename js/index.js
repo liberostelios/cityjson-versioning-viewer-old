@@ -59,7 +59,11 @@ var app = new Vue({
 
           if ("versioning" in cm)
           {
-            this.versions = cm["versioning"]["versions"];
+            versions = cm["versioning"]["versions"];
+            for (var key in versions){
+              versions[key]["date"] = new Date(versions[key]["date"]);
+            }
+            this.versions = versions;
             this.file_loaded = true;
           }
           else
