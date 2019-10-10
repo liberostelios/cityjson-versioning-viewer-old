@@ -2,12 +2,13 @@ Vue.component('version-viewer', {
   props: ['version', 'vid'],
   template: `
   <div class="card mb-2">
+    <div class="card-header">{{ vid }}</div>
     <div class="card-body">
       <h5 class="card-title">{{ version.message }}</h5>
       <h6 class="card-subtitle text-muted">{{ version.author }}</h6>
       <p class="card-text my-2" v-show="'parents' in version && version.parents.length">Parents: <a href="#" class="card-link" v-for="parent in version.parents" v-on:click="select(parent)">{{ parent | truncate(7) }}</a></p>
+      <a href="#" class="card-link text-danger" @click="select('')">Close</a>
     </div>
-    <div class="card-footer">{{ vid }}</div>
   </div>
   `,
   methods: {
