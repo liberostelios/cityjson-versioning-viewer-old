@@ -31,11 +31,12 @@
                   </select>
                 </div>
               <div class="list-group py-md-2">
-                <version-item
+                <version-list-item
                     v-for="(item, hash) in orderedVersions(active_branch)"
                     v-bind:version="item"
                     v-bind:vid="hash"
-                ></version-item>
+                    v-bind:active="isActive(hash)"
+                ></version-list-item>
               </div>
               <div class="card">
                 <div class="card-header bg-dark text-white">Settings</div>

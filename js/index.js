@@ -1,26 +1,29 @@
-Vue.component('version-item', {
-    props: ['version', 'vid'],
+Vue.component('version-list-item', {
+    props: ['version', 'vid', 'active'],
     template: `
-    <div class="list-group-item list-group-item-action flex-column align-items-start">
+    <a class="list-group-item list-group-item-action flex-column align-items-start" v-bind:class="{ 'text-white' : active, active : active }" v-on:click="select_this">
       <div class="d-flex justify-content-between">
         <div class="col-9">
-          <h6 class="mb-1">{{ version.message }} <span class="badge badge-primary">{{ version.objects.length }} objects</span></h6>
-          <small class="text-muted"><b>{{ version.author }}</b> committed at {{ version.date }}.</small>
+          <h6 class="mb-1">{{ version.message }} <span class="badge" v-bind:class="[ active ? 'badge-light' : 'badge-success' ]">{{ version.objects.length }} objects</span></h6>
+          <small v-bind:class="[ active ? 'text-white' : 'text-muted' ]"><b>{{ version.author }}</b> committed at {{ version.date }}.</small>
         </div>
         <div class="col-3 pr-0 align-self-center">
           <div class="input-group input-group-sm justify-content-end">
             <span class="input-group-text text-monospace" id="basic-addon1"><small>{{ vid | truncate(7) }}</small></span>
             <div class="input-group-append">
-              <button class="btn btn-outline-primary" type="button" v-on:click="download_version(vid)"><i class="fas fa-download"></i></span></button>
+              <button class="btn" v-bind:class="[ active ? 'btn-outline-light' : 'btn-outline-secondary' ]" type="button" v-on:click="download_version(vid)"><i class="fas fa-download"></i></span></button>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </a>
     `,
     methods: {
       download_version(vid) {
         this.$root.$emit('download_version', vid);
+      },
+      select_this() {
+        this.$root.$emit('select_version', this.vid);
       }
     }
 })
@@ -30,6 +33,7 @@ var app = new Vue({
     data: {
       file_loaded: false,
       active_branch: "master",
+      active_version: "",
       citymodel: {},
       versioning: {
         versions: {
@@ -49,6 +53,10 @@ var app = new Vue({
         console.log(self.file_loaded);
         self.downloadVersion(vid);
       });
+
+      this.$root.$on('select_version', (vid) => {
+        this.active_version = vid;
+      });
     },
     methods: {
       orderedVersions(branch) {
@@ -64,6 +72,9 @@ var app = new Vue({
         }
 
         return result;
+      },
+      isActive(vid) {
+        return this.active_version == vid;
       },
       reset() {
         this.versions = {};
