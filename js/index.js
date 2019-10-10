@@ -93,10 +93,23 @@ var app = new Vue({
         current_vid = this.versioning.branches[branch];
         result[current_vid] = this.versioning.versions[current_vid];
 
-        while ("parents" in result[current_vid] && result[current_vid].parents.length > 0)
+        var new_parents = [];
+        
+        if ("parents" in result[current_vid])
         {
-          current_vid = result[current_vid].parents[0];
+          new_parents = new_parents.concat(result[current_vid].parents);
+        }
+
+        while (new_parents.length > 0)
+        {
+          current_vid = new_parents.pop();
+
           result[current_vid] = this.versioning.versions[current_vid];
+
+          if ("parents" in result[current_vid])
+          {
+            new_parents = result[current_vid].parents.concat(new_parents);
+          }
         }
 
         return result;
