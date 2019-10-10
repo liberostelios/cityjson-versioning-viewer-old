@@ -1,3 +1,22 @@
+Vue.component('version-viewer', {
+  props: ['version', 'vid'],
+  template: `
+  <div class="card mb-2">
+    <div class="card-body">
+      <h5 class="card-title">{{ version.message }}</h5>
+      <h6 class="card-subtitle text-muted">{{ version.author }}</h6>
+      <p class="card-text my-2" v-show="'parents' in version && version.parents.length">Parents: <a href="#" class="card-link" v-for="parent in version.parents" v-on:click="select(parent)">{{ parent | truncate(7) }}</a></p>
+    </div>
+    <div class="card-footer">{{ vid }}</div>
+  </div>
+  `,
+  methods: {
+    select(vid) {
+      this.$root.$emit('select_version', vid);
+    }
+  }
+})
+
 Vue.component('version-list-item', {
     props: ['version', 'vid', 'active'],
     template: `
@@ -58,6 +77,14 @@ var app = new Vue({
         this.active_version = vid;
       });
     },
+    computed: {
+      activeVersionObject: function() {
+        if (this.active_version != "")
+          return this.versioning.versions[this.active_version];
+        
+        return {};
+      }
+    },
     methods: {
       orderedVersions(branch) {
         result = {};
@@ -79,6 +106,7 @@ var app = new Vue({
       reset() {
         this.versions = {};
         this.active_branch = "master";
+        this.active_version = "";
         this.file_loaded = false;
       },
       selectedFile() {
