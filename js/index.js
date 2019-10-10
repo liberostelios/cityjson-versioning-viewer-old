@@ -11,7 +11,7 @@ Vue.component('version-list-item', {
           <div class="input-group input-group-sm justify-content-end">
             <span class="input-group-text text-monospace" id="basic-addon1"><small>{{ vid | truncate(7) }}</small></span>
             <div class="input-group-append">
-              <button class="btn" v-bind:class="[ active ? 'btn-outline-light' : 'btn-outline-secondary' ]" type="button" v-on:click="download_version(vid)"><i class="fas fa-download"></i></span></button>
+              <button class="btn" v-bind:class="[ active ? 'btn-outline-light' : 'btn-outline-primary' ]" type="button" v-on:click="download_version(vid)"><i class="fas fa-download"></i></span></button>
             </div>
           </div>
         </div>
