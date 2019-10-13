@@ -53,7 +53,7 @@ var app = new Vue({
     data: {
       file_loaded: false,
       active_branch: "master",
-      active_version: "",
+      active_version: null,
       citymodel: {},
       versioning: {
         versions: {
@@ -80,10 +80,22 @@ var app = new Vue({
     },
     computed: {
       activeVersionObject: function() {
-        if (this.active_version != "")
+        if (this.isVersionSelected)
           return this.versioning.versions[this.active_version];
         
         return {};
+      },
+      isVersionSelected: function() {
+        return this.active_version !== null;
+      },
+      activeCityModel: function() {
+        if (!this.isVersionSelected)
+        {
+          return {};
+        }
+
+        console.log(this.active_version);
+        return this.extract_citymodel(this.active_version);
       }
     },
     methods: {
@@ -120,7 +132,7 @@ var app = new Vue({
       reset() {
         this.versions = {};
         this.active_branch = "master";
-        this.active_version = "";
+        this.active_version = null;
         this.file_loaded = false;
       },
       selectedFile() {
@@ -157,19 +169,7 @@ var app = new Vue({
           }
         }
       },
-      download(filename, text) {
-        var element = document.createElement('a');
-        element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(text));
-        element.setAttribute('download', filename);
-      
-        element.style.display = 'none';
-        document.body.appendChild(element);
-      
-        element.click();
-      
-        document.body.removeChild(element);
-      },
-      downloadVersion(vid) {
+      extract_citymodel(vid) {
         cityobjects = this.versioning.versions[vid].objects;
 
         var result = $.extend({}, this.citymodel);
@@ -183,16 +183,31 @@ var app = new Vue({
           if (cityobjects.indexOf(key) != -1)
           {
             var new_key = this.citymodel["CityObjects"][key]["cityobject_id"];
-            result["CityObjects"][new_key] = this.citymodel["CityObjects"][key];
+            result["CityObjects"][new_key] = $.extend({}, this.citymodel["CityObjects"][key]);;
             delete result["CityObjects"][new_key]["cityobject_id"];
           }
         }
 
-        text = JSON.stringify(result);
+        return result;
+      },
+      download(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+      
+        element.style.display = 'none';
+        document.body.appendChild(element);
+      
+        element.click();
+      
+        document.body.removeChild(element);
+      },
+      downloadVersion(vid) {
+        text = JSON.stringify(this.activeCityModel);
 
         this.download(vid + ".json", text);
       }
     }
 })
 
-Vue.config.devtools = true
+// Vue.config.devtools = true

@@ -38,11 +38,22 @@
                     v-bind:active="isActive(hash)"
                 ></version-list-item>
               </div>
-              <version-viewer
-                v-bind:version="activeVersionObject"
-                v-bind:vid="active_version"
-                v-show="active_version"
-              ></version-viewer>
+              <div class="row">
+                <div class="col-4">
+                  <version-viewer
+                    v-bind:version="activeVersionObject"
+                    v-bind:vid="active_version"
+                    v-show="active_version"
+                  ></version-viewer>
+                </div>
+                <div class="col-8">
+                  <citymodel-viewer
+                    v-show="isVersionSelected"
+                    v-bind:citymodel="activeCityModel"
+                  ></citymodel-viewer>
+                </div>
+              </div>
+              
               <div class="card">
                 <div class="card-header bg-dark text-white">Settings</div>
                 <div class="card-body">
@@ -85,6 +96,10 @@
     <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
     <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue2-filters/dist/vue2-filters.min.js"></script>
+    <script src="js/three.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/earcut@2.1.5/dist/earcut.dev.min.js"></script>
+    <script src="js/viewer.js"></script>
     <script src="js/index.js"></script>
   </body>
 </html>
