@@ -25,7 +25,7 @@ Vue.component('version-list-item', {
       <div class="d-flex justify-content-between">
         <div class="col-9">
           <h6 class="mb-1">{{ version.message }} <span class="badge" v-bind:class="[ active ? 'badge-light' : 'badge-success' ]">{{ version.objects.length }} objects</span></h6>
-          <small v-bind:class="[ active ? 'text-white' : 'text-muted' ]"><b>{{ version.author }}</b> committed at {{ version.date }}.</small>
+          <small v-bind:class="[ active ? 'text-white' : 'text-muted' ]"><b>{{ version.author }}</b> committed at {{ version.date | moment_from }}.</small>
         </div>
         <div class="col-3 pr-0 align-self-center">
           <div class="input-group input-group-sm justify-content-end">
@@ -44,6 +44,14 @@ Vue.component('version-list-item', {
       },
       select_this() {
         this.$root.$emit('select_version', this.vid);
+      },
+      moment: function () {
+        return moment();
+      }
+    },
+    filters: {
+      moment_from: function (date) {
+        return moment(date).fromNow();
       }
     }
 })
