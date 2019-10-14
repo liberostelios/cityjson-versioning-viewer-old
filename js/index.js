@@ -60,6 +60,7 @@ var app = new Vue({
     el: '#app',
     data: {
       file_loaded: false,
+      show_preview: false,
       active_branch: "master",
       active_version: null,
       citymodel: {},
@@ -218,4 +219,4 @@ var app = new Vue({
     }
 })
 
-// Vue.config.devtools = true
+Vue.config.devtools = true

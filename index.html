@@ -39,13 +39,13 @@
                 ></version-list-item>
               </div>
               <div class="row" v-show="isVersionSelected">
-                <div class="col-4">
+                <div v-bind:class="[show_preview ? 'col-4' : 'col-12']">
                   <version-viewer
                     v-bind:version="activeVersionObject"
                     v-bind:vid="active_version"
                   ></version-viewer>
                 </div>
-                <div class="col-8">
+                <div class="col-8" v-if="show_preview">
                   <div class="card mb-2">
                     <h5 class="card-header bg-dark text-white">
                       Preview
@@ -63,6 +63,14 @@
               <div class="card">
                 <div class="card-header bg-secondary text-white">Settings</div>
                 <div class="card-body">
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" v-model="show_preview" id="showPreview">
+                      <label class="form-check-label" for="showPreview">
+                        Show 3D preview
+                      </label>
+                    </div>
+                  </div>
                   <button type="button" class="btn btn-outline-danger" v-on:click="reset"><i class="fas fa-redo mr-1"></i> Start over</button>
                 </div>
               </div>
