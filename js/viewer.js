@@ -6,7 +6,6 @@ Vue.component('citymodel-viewer', {
   data() {
     return {
       camera_init: false,
-      something: "something",
       ALLCOLOURS: {
         "Building": 0xcc0000,
         "BuildingPart": 0xcc0000,
