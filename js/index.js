@@ -2,7 +2,7 @@ Vue.component('version-viewer', {
   props: ['version', 'vid'],
   template: `
   <div class="card mb-2">
-    <div class="card-header">{{ vid }}</div>
+    <div class="card-header"><h5>{{ vid | truncate }}</h5></div>
     <div class="card-body">
       <h5 class="card-title">{{ version.message }}</h5>
       <h6 class="card-subtitle text-muted">{{ version.author }}</h6>

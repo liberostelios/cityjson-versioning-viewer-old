@@ -1,7 +1,7 @@
 Vue.component('citymodel-viewer', {
   props: ['citymodel'],
   template: `
-  <div id="viewer" class="col-12" style="height: 300px"></div>
+  <div id="viewer" class="col-12 px-0" style="height: 300px"></div>
   `,
   data() {
     return {
@@ -66,6 +66,9 @@ Vue.component('citymodel-viewer', {
     initScene() {
       this.scene = new THREE.Scene();
       var ratio = $("#viewer").width() / $("#viewer").height();
+      console.log("Width: " + $("#viewer").width());
+      console.log("Height: " + $("#viewer").height());
+      console.log("Ratio: " + ratio);
       this.camera = new THREE.PerspectiveCamera( 60, ratio, 0.001, 1000 );
       
       this.renderer = new THREE.WebGLRenderer(  );
