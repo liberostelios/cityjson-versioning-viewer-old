@@ -5,13 +5,7 @@ Vue.component('citymodel-viewer', {
   `,
   data() {
     return {
-      scene: null,
-      renderer: null,
-      camera: null,
-      controls: null,
       camera_init: false,
-      geoms: {},
-      meshes: [],
       something: "something",
       ALLCOLOURS: {
         "Building": 0xcc0000,
@@ -37,6 +31,14 @@ Vue.component('citymodel-viewer', {
         "WaterBody": 0x4da6ff
       }
     }
+  },
+  beforeCreate() {
+    this.scene = null;
+    this.camera = null;
+    this.renderer = null;
+    this.controls = null;
+    this.geoms = {};
+    this.meshes = [];
   },
   mounted() {
     this.initScene();
