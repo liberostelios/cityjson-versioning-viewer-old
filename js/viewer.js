@@ -66,12 +66,11 @@ Vue.component('citymodel-viewer', {
     initScene() {
       this.scene = new THREE.Scene();
       var ratio = $("#viewer").width() / $("#viewer").height();
-      console.log("Width: " + $("#viewer").width());
-      console.log("Height: " + $("#viewer").height());
-      console.log("Ratio: " + ratio);
       this.camera = new THREE.PerspectiveCamera( 60, ratio, 0.001, 1000 );
       
-      this.renderer = new THREE.WebGLRenderer(  );
+      this.renderer = new THREE.WebGLRenderer({
+        antialias: true
+      });
       viewer = document.getElementById("viewer");
       viewer.appendChild( this.renderer.domElement );
       this.renderer.setSize($("#viewer").width(), $("#viewer").height());
