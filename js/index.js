@@ -23,11 +23,11 @@ Vue.component('version-list-item', {
     template: `
     <a class="list-group-item list-group-item-action flex-column align-items-start" v-bind:class="{ 'text-white' : active, active : active }" v-on:click="select_this">
       <div class="d-flex justify-content-between">
-        <div class="col-9">
+        <div class="col-8 pl-0">
           <h6 class="mb-1">{{ version.message }} <span class="badge" v-bind:class="[ active ? 'badge-light' : 'badge-success' ]">{{ version.objects.length }} objects</span></h6>
           <small v-bind:class="[ active ? 'text-white' : 'text-muted' ]"><b>{{ version.author }}</b> committed at {{ version.date | moment_from }}.</small>
         </div>
-        <div class="col-3 pr-0 align-self-center">
+        <div class="col-4 pr-0 align-self-center">
           <div class="input-group input-group-sm justify-content-end">
             <span class="input-group-text text-monospace" id="basic-addon1"><small>{{ vid | truncate(7) }}</small></span>
             <div class="input-group-append">

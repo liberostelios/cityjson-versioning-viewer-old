@@ -1,7 +1,7 @@
 Vue.component('citymodel-viewer', {
   props: ['citymodel'],
   template: `
-  <div id="viewer" class="col-12 px-0" style="height: 300px"></div>
+  <div id="viewer" class="col-12 px-0 h-100"></div>
   `,
   data() {
     return {
