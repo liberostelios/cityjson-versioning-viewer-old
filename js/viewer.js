@@ -73,7 +73,7 @@ Vue.component('citymodel-viewer', {
       viewer = document.getElementById("viewer");
       viewer.appendChild( this.renderer.domElement );
       this.renderer.setSize($("#viewer").width(), $("#viewer").height());
-      this.renderer.setClearColor(0xFFFFFF);
+      this.renderer.setClearColor(0xd9eefc);
       this.renderer.shadowMap.enabled = true;
       this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             
