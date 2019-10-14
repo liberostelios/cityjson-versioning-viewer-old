@@ -7,7 +7,7 @@ Vue.component('version-viewer', {
       <h5 class="card-title">{{ version.message }}</h5>
       <h6 class="card-subtitle text-muted">{{ version.author }}</h6>
       <p class="card-text my-2" v-show="'parents' in version && version.parents.length">Parents: <a href="#" class="card-link" v-for="parent in version.parents" v-on:click="select(parent)">{{ parent | truncate(7) }}</a></p>
-      <a href="#" class="card-link text-danger" @click="select('')">Close</a>
+      <a href="#" class="card-link text-danger" @click="select(null)">Close</a>
     </div>
   </div>
   `,
