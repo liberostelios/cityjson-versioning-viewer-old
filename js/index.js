@@ -1,19 +1,28 @@
 Vue.component('version-viewer', {
   props: ['version', 'vid'],
   template: `
-  <div class="card mb-2">
-    <h5 class="card-header bg-dark text-white text-truncate">{{ vid }}</h5>
-    <div class="card-body">
-      <h5 class="card-title">{{ version.message }}</h5>
-      <h6 class="card-subtitle text-muted">{{ version.author }}</h6>
-      <p class="card-text my-2" v-show="'parents' in version && version.parents.length">Parents: <a href="#" class="card-link" v-for="parent in version.parents" v-on:click="select(parent)">{{ parent | truncate(7) }}</a></p>
-      <a href="#" class="card-link text-danger" @click="select(null)">Close</a>
+  <div>
+    <div class="d-flex justify-content-between align-items-center">
+      <h3>{{ version.message }}</h3>
+      <a href="#" class="btn btn-sm btn-danger" @click="select(null)"><i class="fas fa-times mr-1"></i> Close</a>
     </div>
+    <hr class="my-2"></hr>
+    <p class="text-muted">Version <a href="#" class="text-monospace" data-toggle="tooltip" data-placement="top"><small>{{ vid | truncate(6) }}</small></a> authored {{ version.date | moment_from }} by <span class="font-weight-bold">{{ version.author }}</span></p>
+    <p class="my-2" v-show="'parents' in version && version.parents.length"><small>Parents: <a href="#" class="card-link text-monospace" v-for="parent in version.parents" v-on:click="select(parent)">{{ parent | truncate(7) }}</small></a></p>
   </div>
   `,
   methods: {
     select(vid) {
       this.$root.$emit('select_version', vid);
+    }
+  },
+  beforeUpdate() {
+    $('[data-toggle="tooltip"]').tooltip('dispose');
+    $('[data-toggle="tooltip"]').tooltip({ title: this.vid });
+  },
+  filters: {
+    moment_from: function (date) {
+      return moment(date).fromNow();
     }
   }
 })
@@ -25,7 +34,7 @@ Vue.component('version-list-item', {
       <div class="d-flex justify-content-between">
         <div class="col-8 pl-0">
           <h6 class="mb-1">{{ version.message }} <span class="badge" v-bind:class="[ active ? 'badge-light' : 'badge-success' ]">{{ version.objects.length }} objects</span></h6>
-          <small v-bind:class="[ active ? 'text-white' : 'text-muted' ]"><b>{{ version.author }}</b> committed at {{ version.date | moment_from }}.</small>
+          <small v-bind:class="[ active ? 'text-white' : 'text-muted' ]"><b>{{ version.author }}</b> committed {{ version.date | moment_from }}.</small>
         </div>
         <div class="col-4 pr-0 align-self-center">
           <div class="input-group input-group-sm justify-content-end">
@@ -105,6 +114,9 @@ var app = new Vue({
 
         console.log(this.active_version);
         return this.extract_citymodel(this.active_version);
+      },
+      showPreview: function () {
+        return this.show_preview && this.isVersionSelected;
       }
     },
     methods: {

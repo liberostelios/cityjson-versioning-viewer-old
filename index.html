@@ -24,7 +24,7 @@
             <div class="col-12 col-xl-4 py-2">
               <div class="form-inline input-group my-2 my-lg-0">
                 <div class="input-group-prepend">
-                  <label class="input-group-text" for="branchSelect">Branch</label>
+                  <label class="input-group-text" for="branchSelect"><i class="fas fa-code-branch mr-1"></i> Branch</label>
                 </div>
                 <select class="custom-select" id="branchSelect" v-model="active_branch">
                   <option v-for="(version, branch) in versioning.branches">{{ branch }}</option>
@@ -55,7 +55,7 @@
             </div>
             <main class="col-12 col-xl-8 py-2">
               <div class="row" v-show="isVersionSelected">
-                <div class="col-12">
+                <div class="col-12 my-2">
                   <version-viewer
                     v-bind:version="activeVersionObject"
                     v-bind:vid="active_version"
@@ -63,7 +63,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-12" v-if="show_preview">
+                <div class="col-12" v-if="showPreview">
                   <div class="card mb-2">
                     <h5 class="card-header bg-dark text-white">
                       Preview

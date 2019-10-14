@@ -50,7 +50,7 @@ Vue.component('citymodel-viewer', {
     this.renderer.render( this.scene, this.camera );
   },
   watch: { 
-    citymodel: async function(newVal, oldVal) { // watch it
+    citymodel: async function(newVal, oldVal) {
       this.clearScene();
 
       if (Object.keys(newVal).length > 0)
