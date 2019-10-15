@@ -7,7 +7,9 @@ var app = new Vue({
     },
     methods: {
       matches(coid, cityobject) {
-        return coid.includes(this.search_term) || cityobject.type.includes(this.search_term);
+        var regex = RegExp(this.search_term, "i");
+        var obj_json = JSON.stringify(cityobject);
+        return regex.test(coid) | regex.test(obj_json);
       },
       selectedFile() {
         console.log("Selected a CityJSON file...");
