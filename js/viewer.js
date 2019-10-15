@@ -6,7 +6,7 @@ Vue.component('cityobject', {
     }
   },
   template: `
-  <div class="card mb-2">
+  <div class="card mb-2" :id="cityobject_id">
     <div class="card-body">
       <h6 class="card-title"><i v-bind:class="iconType"></i> {{ cityobject_id }}</h6>
       <p class="card-subtitle text-muted">{{ cityobject.type }}</p>
@@ -15,7 +15,7 @@ Vue.component('cityobject', {
         <dt class="col-sm-4"><small class="font-weight-bold">{{ key }}</small></dt>
         <dd class="col-sm-8"><small>{{ value }}</small></dd>
       </dl>
-      <textarea class="form-control" id="validationTextarea" v-model="jsonString" v-show="edit_mode"></textarea>
+      <textarea class="form-control" id="validationTextarea" v-model="jsonString" v-if="edit_mode"></textarea>
     </div>
   </div>
   `,

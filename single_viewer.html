@@ -21,7 +21,7 @@
       <div v-if="file_loaded" class="h-100">
         <div class="container-fluid h-100">
           <div class="row h-100">
-            <div class="col-12 col-xl-4 py-3 h-100 overflow-auto">
+            <main class="col-12 col-xl-4 py-3 h-100 overflow-auto">
               <cityobject
                 v-for="(cityobject, coid) in citymodel.CityObjects"
                 v-bind:cityobject="cityobject"
@@ -29,12 +29,12 @@
                 v-bind:key="coid"
                 v-show="matches(coid, cityobject)"
               ></cityobject>
-            </div>
-            <main class="col-12 col-xl-8 p-0 h-100">
+            </main>
+            <div class="col-12 col-xl-8 p-0 h-100">
               <citymodel-viewer
                 v-bind:citymodel="citymodel"
               ></citymodel-viewer>
-            </main>
+            </div>
           </div>
         </div>
       </div>
