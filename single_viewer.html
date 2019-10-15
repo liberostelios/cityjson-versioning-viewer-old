@@ -24,7 +24,7 @@
             <main class="col-12 col-xl-4 py-3 h-100 overflow-auto">
               <h5>City Objects <span class="badge badge-secondary">{{ Object.keys(citymodel.CityObjects).length }}</span></h5>
               <cityobject
-                v-for="(cityobject, coid) in filteredCityObjects"
+                v-for="(cityobject, coid) in this.citymodel.CityObjects"
                 v-bind:cityobject="cityobject"
                 v-bind:cityobject_id="coid"
                 v-bind:key="coid"
