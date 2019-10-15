@@ -7,13 +7,17 @@ Vue.component('cityobject', {
   },
   template: `
   <div class="card mb-2 shadow" :id="cityobject_id">
-    <div class="card-header d-flex justify-content-between">
-      <div>
-        <a href="#" id="objicon" data-toggle="tooltip" data-placement="top" :title="cityobject.type"><i v-bind:class="iconType"></i></a> <a :href="'#' + cityobject_id + 'Body'" class="text-dark text-decoration-none" data-toggle="collapse">{{ cityobject_id }}</a>
+    <div class="card-header">
+      <div class="d-flex justify-content-between">
+        <div>
+          <a href="#" id="objicon" data-toggle="tooltip" data-placement="top" :title="cityobject.type"><i v-bind:class="iconType"></i></a> <a :href="'#' + cityobject_id + 'Body'" class="text-dark text-decoration-none" data-toggle="collapse">{{ cityobject_id }}</a>
+        </div>
+        <div>
+          <a href="#" @click="edit_mode = !edit_mode"><i class="fas fa-pen mr-1" :class="[ edit_mode ? 'text-dark' : 'text-secondary' ]"></i></a>
+        </div>
       </div>
-      <div>
-        <a href="#" @click="edit_mode = !edit_mode"><i class="fas fa-pen mr-1" :class="[ edit_mode ? 'text-dark' : 'text-secondary' ]"></i></a>
-      </div>
+      <small v-show="'parents' in cityobject">Parents: <i class="fas fa-cube text-danger mr-1" v-for="obj in cityobject.parents"></i></small>
+      <small v-show="'children' in cityobject">Children: <i class="fas fa-cube text-success mr-1" v-for="obj in cityobject.children"></i></small>
     </div>
     <div class="card-body collapse show" :id="cityobject_id + 'Body'">
       <dl class="row my-0" v-for="(value, key) in cityobject.attributes" v-show="edit_mode == false">
