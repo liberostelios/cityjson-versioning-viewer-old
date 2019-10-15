@@ -68,7 +68,7 @@ Vue.component('cityobject', {
     },
     jsonString: {
       get: function() {
-        return JSON.stringify(this.cityobject);
+        return JSON.stringify(this.cityobject, undefined, 4);
       },
       set: function(newValue) {
         this.cityobject = JSON.parse(newValue);
