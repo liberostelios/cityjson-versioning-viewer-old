@@ -7,8 +7,15 @@ Vue.component('cityobject', {
   },
   template: `
   <div class="card mb-2 shadow" :id="cityobject_id">
-    <div class="card-body">
-      <h6 class="card-title"><a href="#" id="objicon" data-toggle="tooltip" data-placement="top" :title="cityobject.type"><i v-bind:class="iconType"></i></a> {{ cityobject_id }}</h6>
+    <div class="card-header d-flex justify-content-between">
+      <div>
+        <a href="#" id="objicon" data-toggle="tooltip" data-placement="top" :title="cityobject.type"><i v-bind:class="iconType"></i></a> <a :href="'#' + cityobject_id + 'Body'" class="text-dark text-decoration-none" data-toggle="collapse">{{ cityobject_id }}</a>
+      </div>
+      <div>
+        <a href="#" @click="edit_mode = !edit_mode"><i class="fas fa-pen mr-1" :class="[ edit_mode ? 'text-dark' : 'text-secondary' ]"></i></a>
+      </div>
+    </div>
+    <div class="card-body collapse show" :id="cityobject_id + 'Body'">
       <dl class="row my-0" v-for="(value, key) in cityobject.attributes" v-show="edit_mode == false">
         <dt class="col-sm-4"><small class="font-weight-bold">{{ key }}</small></dt>
         <dd class="col-sm-8"><small>{{ value }}</small></dd>
@@ -55,8 +62,13 @@ Vue.component('cityobject', {
         return ['fas', 'fa-question', 'text-secondary', 'mr-1'];
       }
     },
-    jsonString: function() {
-      return JSON.stringify(this.cityobject);
+    jsonString: {
+      get: function() {
+        return JSON.stringify(this.cityobject);
+      },
+      set: function(newValue) {
+        this.cityobject = JSON.parse(newValue);
+      }
     }
   }
 })
