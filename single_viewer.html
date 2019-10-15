@@ -16,7 +16,7 @@
     <div id="app" class="h-100">
       <nav class="navbar navbar-dark bg-dark">
           <a class="navbar-brand" href="#">CityJSON Viewer</a>
-          <input type="search" class="form-control col-2" placeholder="Search..." v-model="search_term">
+          <input type="search" class="form-control col-2" placeholder="Search..." v-model="search_term" v-show="file_loaded">
       </nav>
       <div v-if="file_loaded" class="h-100">
         <div class="container-fluid h-100">
