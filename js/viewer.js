@@ -1,3 +1,62 @@
+Vue.component('cityobject', {
+  props: ['cityobject', 'cityobject_id'],
+  data() {
+    return {
+      edit_mode: false
+    }
+  },
+  template: `
+  <div class="card mb-2">
+    <div class="card-body">
+      <h6 class="card-title"><i v-bind:class="iconType"></i> {{ cityobject_id }}</h6>
+      <p class="card-subtitle text-muted">{{ cityobject.type }}</p>
+      <hr></hr>
+      <dl class="row my-0" v-for="(value, key) in cityobject.attributes" v-show="edit_mode == false">
+        <dt class="col-sm-4"><small class="font-weight-bold">{{ key }}</small></dt>
+        <dd class="col-sm-8"><small>{{ value }}</small></dd>
+      </dl>
+      <textarea class="form-control" id="validationTextarea" v-model="jsonString" v-show="edit_mode"></textarea>
+    </div>
+  </div>
+  `,
+  computed: {
+    iconType: function() {
+      switch(this.cityobject.type)
+      {
+        case "Building":
+          return ['fas', 'fa-building', 'text-danger', 'mr-1'];
+        case "BuildingPart":
+          return ['far', 'fa-building', 'text-danger', 'mr-1'];
+        case "BuildingInstallation":
+          return ['fas', 'fa-city', 'text-danger', 'mr-1'];
+        case "CityFurniture":
+          return ['fas', 'fa-store-alt', 'text-danger', 'mr-1'];
+        case "SolitaryVegetationObject":
+          return ['fas', 'fa-tree', 'text-success', 'mr-1'];
+        case "Tunnel":
+          return ['fas', 'fa-archway', 'text-dark', 'mr-1'];
+        case "TunnelInstallation":
+          return ['fas', 'fa-archway', 'text-warning', 'mr-1'];
+        case "Road":
+          return ['fas', 'fa-road', 'text-dark', 'mr-1']
+        case "Railway":
+          return ['fas', 'fa-train', 'text-primary', 'mr-1'];
+        case "GenericCityObject":
+          return ['fas', 'fa-home', 'text-danger', 'mr-1'];
+        case "CityObjectGroup":
+          return ['fas', 'fa-object-group', 'text-dark', 'mr-1'];
+        case "LandUse":
+          return ['fas', 'fa-chart-area', 'text-success', 'mr-1'];
+        case "TINRelief":
+            return ['fas', 'fa-mountain', 'text-success', 'mr-1'];
+      }
+    },
+    jsonString: function() {
+      return JSON.stringify(this.cityobject);
+    }
+  }
+})
+
 Vue.component('citymodel-viewer', {
   props: ['citymodel'],
   template: `

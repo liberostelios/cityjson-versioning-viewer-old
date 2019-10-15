@@ -9,19 +9,28 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/timeline.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/bc945c94ff.js" crossorigin="anonymous"></script>
 
     <title>CityJSON versioning viewer</title>
   </head>
   <body>
-    <div id="app">
+    <div id="app" class="h-100">
       <nav class="navbar navbar-dark bg-dark">
           <a class="navbar-brand" href="#">CityJSON Viewer</a>
+          <input type="search" class="form-control col-2" placeholder="Search..." v-model="search_term">
       </nav>
-      <div v-if="file_loaded">
-        <div class="container">
-          <div class="row">
-            <main class="col-12 py-md-3">
+      <div v-if="file_loaded" class="h-100">
+        <div class="container-fluid h-100">
+          <div class="row h-100">
+            <div class="col-12 col-xl-4 py-3 h-100 overflow-auto">
+              <cityobject
+                v-for="(cityobject, coid) in citymodel.CityObjects"
+                v-bind:cityobject="cityobject"
+                v-bind:cityobject_id="coid"
+                v-bind:key="coid"
+                v-show="matches(coid, cityobject)"
+              ></cityobject>
+            </div>
+            <main class="col-12 col-xl-8 p-0 h-100">
               <citymodel-viewer
                 v-bind:citymodel="citymodel"
               ></citymodel-viewer>
@@ -66,5 +75,6 @@
     <script src="https://cdn.jsdelivr.net/npm/earcut@2.1.5/dist/earcut.dev.min.js"></script>
     <script src="js/viewer.js"></script>
     <script src="js/singe_viewer.js"></script>
+    <script src="https://kit.fontawesome.com/bc945c94ff.js" crossorigin="anonymous"></script>
   </body>
 </html>

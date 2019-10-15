@@ -2,9 +2,13 @@ var app = new Vue({
     el: '#app',
     data: {
       file_loaded: false,
-      citymodel: {},
+      search_term: "",
+      citymodel: {}
     },
     methods: {
+      matches(coid, cityobject) {
+        return coid.includes(this.search_term) || cityobject.type.includes(this.search_term);
+      },
       selectedFile() {
         console.log("Selected a CityJSON file...");
         console.log(this.$refs.cityJSONFile.files[0]);
@@ -46,4 +50,4 @@ var app = new Vue({
     }
 })
 
-// Vue.config.devtools = true
+Vue.config.devtools = true
