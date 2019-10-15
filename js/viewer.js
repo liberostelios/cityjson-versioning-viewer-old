@@ -6,10 +6,9 @@ Vue.component('cityobject', {
     }
   },
   template: `
-  <div class="card mb-2" :id="cityobject_id">
+  <div class="card mb-2 shadow" :id="cityobject_id">
     <div class="card-body">
       <h6 class="card-title"><a href="#" id="objicon" data-toggle="tooltip" data-placement="top" :title="cityobject.type"><i v-bind:class="iconType"></i></a> {{ cityobject_id }}</h6>
-      <hr></hr>
       <dl class="row my-0" v-for="(value, key) in cityobject.attributes" v-show="edit_mode == false">
         <dt class="col-sm-4"><small class="font-weight-bold">{{ key }}</small></dt>
         <dd class="col-sm-8"><small>{{ value }}</small></dd>
@@ -19,8 +18,7 @@ Vue.component('cityobject', {
   </div>
   `,
   mounted() {
-    console.log(this.cityobject.type);
-    $('[data-toggle="tooltip"]').tooltip();
+    $('#' + this.cityobject_id + " #objicon").tooltip();
   },
   computed: {
     iconType: function() {
@@ -183,7 +181,6 @@ Vue.component('citymodel-viewer', {
     },
     //convert CityObjects to mesh and add them to the viewer
     async loadCityObjects(json) {      
-      console.log(json);
       //create one geometry that contains all vertices (in normalized form)
       //normalize must be done for all coordinates as otherwise the objects are at same pos and have the same size
       var normGeom = new THREE.Geometry()

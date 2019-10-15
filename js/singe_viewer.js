@@ -5,6 +5,17 @@ var app = new Vue({
       search_term: "",
       citymodel: {}
     },
+    computed: {
+      filteredCityObjects: function() {
+        var result = _.pickBy(this.citymodel.CityObjects, function(value, key) {
+          var regex = RegExp(this.search_term, "i");
+          var obj_json = JSON.stringify(value);
+          return regex.test(key) | regex.test(obj_json);
+        });
+
+        return result;
+      }
+    },
     methods: {
       matches(coid, cityobject) {
         var regex = RegExp(this.search_term, "i");
