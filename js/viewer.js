@@ -114,12 +114,12 @@ Vue.component('citymodel-viewer', {
     this.geoms = {};
     this.meshes = [];
   },
-  mounted() {
+  async mounted() {
     this.initScene();
 
     if (Object.keys(this.citymodel).length > 0)
     {
-      this.loadCityObjects(this.citymodel);
+      await this.loadCityObjects(this.citymodel);
     }
         
     this.renderer.render( this.scene, this.camera );
