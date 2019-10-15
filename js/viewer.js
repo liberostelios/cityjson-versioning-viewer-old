@@ -8,8 +8,7 @@ Vue.component('cityobject', {
   template: `
   <div class="card mb-2" :id="cityobject_id">
     <div class="card-body">
-      <h6 class="card-title"><i v-bind:class="iconType"></i> {{ cityobject_id }}</h6>
-      <p class="card-subtitle text-muted">{{ cityobject.type }}</p>
+      <h6 class="card-title"><a href="#" id="objicon" data-toggle="tooltip" data-placement="top" :title="cityobject.type"><i v-bind:class="iconType"></i></a> {{ cityobject_id }}</h6>
       <hr></hr>
       <dl class="row my-0" v-for="(value, key) in cityobject.attributes" v-show="edit_mode == false">
         <dt class="col-sm-4"><small class="font-weight-bold">{{ key }}</small></dt>
@@ -19,36 +18,43 @@ Vue.component('cityobject', {
     </div>
   </div>
   `,
+  mounted() {
+    console.log(this.cityobject.type);
+    $('[data-toggle="tooltip"]').tooltip();
+  },
   computed: {
     iconType: function() {
-      switch(this.cityobject.type)
+      type_icons = {
+        "Building": ['fas', 'fa-building', 'text-danger', 'mr-1'],
+        "BuildingPart": ['far', 'fa-building', 'text-danger', 'mr-1'],
+        "BuildingInstallation": ['fas', 'fa-city', 'text-danger', 'mr-1'],
+        "Bridge": ['fas', 'fa-archway', 'text-dark', 'mr-1'],
+        "BridgePart": ['fas', 'fa-archway', 'text-secondary', 'mr-1'],
+        "BridgeInstallation": ['fas', 'fa-archway', 'text-primary', 'mr-1'],
+        "BridgeConstructionElement": ['fas', 'fa-archway', 'text-warning', 'mr-1'],
+        "CityObjectGroup": ['fas', 'fa-cubes', 'text-dark', 'mr-1'],
+        "CityFurniture": ['fas', 'fa-store-alt', 'text-danger', 'mr-1'],
+        "GenericCityObject": ['fas', 'fa-cube', 'text-danger', 'mr-1'],
+        "LandUse": ['fas', 'fa-chart-area', 'text-success', 'mr-1'],
+        "PlantCover": ['fas', 'fa-leaf', 'text-success', 'mr-1'],
+        "Railway": ['fas', 'fa-train', 'text-primary', 'mr-1'],
+        "Road": ['fas', 'fa-road', 'text-dark', 'mr-1'],
+        "SolitaryVegetationObject": ['fas', 'fa-tree', 'text-success', 'mr-1'],
+        "TINRelief": ['fas', 'fa-mountain', 'text-success', 'mr-1'],
+        "TransportSquare": ['fas', 'fa-circle-notch', 'text-dark', 'mr-1'],
+        "Tunnel": ['fas', 'fa-dot-circle', 'text-dark', 'mr-1'],
+        "TunnelPart": ['fas', 'fa-dot-circle', 'text-dark', 'mr-1'],
+        "TunnelInstallation": ['fas', 'fa-dot-circle', 'text-warning', 'mr-1'],
+        "WaterBody": ['fas', 'fa-water', 'text-primary', 'mr-1']
+      };
+
+      if (this.cityobject.type in type_icons)
       {
-        case "Building":
-          return ['fas', 'fa-building', 'text-danger', 'mr-1'];
-        case "BuildingPart":
-          return ['far', 'fa-building', 'text-danger', 'mr-1'];
-        case "BuildingInstallation":
-          return ['fas', 'fa-city', 'text-danger', 'mr-1'];
-        case "CityFurniture":
-          return ['fas', 'fa-store-alt', 'text-danger', 'mr-1'];
-        case "SolitaryVegetationObject":
-          return ['fas', 'fa-tree', 'text-success', 'mr-1'];
-        case "Tunnel":
-          return ['fas', 'fa-archway', 'text-dark', 'mr-1'];
-        case "TunnelInstallation":
-          return ['fas', 'fa-archway', 'text-warning', 'mr-1'];
-        case "Road":
-          return ['fas', 'fa-road', 'text-dark', 'mr-1']
-        case "Railway":
-          return ['fas', 'fa-train', 'text-primary', 'mr-1'];
-        case "GenericCityObject":
-          return ['fas', 'fa-home', 'text-danger', 'mr-1'];
-        case "CityObjectGroup":
-          return ['fas', 'fa-object-group', 'text-dark', 'mr-1'];
-        case "LandUse":
-          return ['fas', 'fa-chart-area', 'text-success', 'mr-1'];
-        case "TINRelief":
-            return ['fas', 'fa-mountain', 'text-success', 'mr-1'];
+        return type_icons[this.cityobject.type];
+      }
+      else
+      {
+        return ['fas', 'fa-question', 'text-secondary', 'mr-1'];
       }
     },
     jsonString: function() {
