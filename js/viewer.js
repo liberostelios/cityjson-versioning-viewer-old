@@ -16,8 +16,8 @@ Vue.component('cityobject', {
           <a href="#" @click="edit_mode = !edit_mode"><i class="fas fa-pen mr-1" :class="[ edit_mode ? 'text-dark' : 'text-secondary' ]"></i></a>
         </div>
       </div>
-      <small v-show="'parents' in cityobject">Parents: <i class="fas fa-cube text-danger mr-1" v-for="obj in cityobject.parents"></i></small>
-      <small v-show="'children' in cityobject">Children: <i class="fas fa-cube text-success mr-1" v-for="obj in cityobject.children"></i></small>
+      <small v-show="'parents' in cityobject">Parents: <a :href="'#' + parent_id" v-for="parent_id in cityobject.parents" data-toggle="tooltip" data-placement="top" :title="parent_id"><i class="fas fa-cube text-danger mr-1"></i></a></small>
+      <small v-show="'children' in cityobject">Children: <a :href="'#' + child_id" v-for="child_id in cityobject.children" data-toggle="tooltip" data-placement="top" :title="child_id"><i class="fas fa-cube text-success mr-1"></i></a></small>
     </div>
     <div class="card-body collapse show" :id="cityobject_id + 'Body'">
       <dl class="row my-0" v-for="(value, key) in cityobject.attributes" v-show="edit_mode == false">
@@ -28,8 +28,8 @@ Vue.component('cityobject', {
     </div>
   </div>
   `,
-  mounted() {
-    $('#' + this.cityobject_id + " #objicon").tooltip();
+  async mounted() {
+    $(`#${this.cityobject_id} [data-toggle="tooltip"]`).tooltip();
   },
   computed: {
     iconType: function() {
