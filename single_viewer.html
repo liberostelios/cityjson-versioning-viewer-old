@@ -25,10 +25,11 @@
               <h5>City Objects <span class="badge badge-secondary">{{ Object.keys(citymodel.CityObjects).length }}</span></h5>
               <cityobject
                 v-for="(cityobject, coid) in this.citymodel.CityObjects"
-                v-bind:cityobject="cityobject"
+                v-bind:cityobject="citymodel.CityObjects[coid]"
                 v-bind:cityobject_id="coid"
                 v-bind:key="coid"
                 v-show="matches(coid, cityobject)"
+                @input="citymodel.CityObjects[coid] = arguments[0]"
               ></cityobject>
             </main>
             <div class="col-12 col-xl-8 p-0 h-100">

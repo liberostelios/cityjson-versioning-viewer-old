@@ -87,7 +87,7 @@ Vue.component('cityobject', {
       var new_json = $(`#${card_id} #json_data`).val();
       this.cityobject = JSON.parse(new_json);
 
-      this.$root.$emit('update_object', this.cityobject_id, this.cityobject);
+      this.$emit('input', this.cityobject);
     }
   }
 })
