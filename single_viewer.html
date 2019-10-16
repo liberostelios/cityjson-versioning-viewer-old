@@ -19,6 +19,7 @@
           <div class="form-inline col-auto" v-show="file_loaded">
             <input type="search" class="form-control col" placeholder="Search..." v-model="search_term">
             <button class="btn btn-primary col-auto ml-2" @click="downloadModel()"><i class="fas fa-download mr-1"></i> Download</button>
+            <button class="btn btn-danger col-auto ml-2" @click="reset()"><i class="fas fa-times mr-1"></i> Close</button>
           </div>
       </nav>
       <div v-if="file_loaded" class="h-100">

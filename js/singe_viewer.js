@@ -3,7 +3,6 @@ var app = new Vue({
     data: {
       file_loaded: false,
       search_term: "",
-      filename: null,
       citymodel: {}
     },
     computed: {
@@ -18,6 +17,11 @@ var app = new Vue({
       }
     },
     methods: {
+      reset() {
+        this.citymodel = {};
+        this.search_term = "";
+        this.file_loaded = false;
+      },
       matches(coid, cityobject) {
         var regex = RegExp(this.search_term, "i");
         var obj_json = JSON.stringify(cityobject);
