@@ -29,7 +29,8 @@ Vue.component('cityobject', {
   </div>
   `,
   async mounted() {
-    $(`#${this.cityobject_id} [data-toggle="tooltip"]`).tooltip();
+    var card_id = $.escapeSelector(this.cityobject_id);
+    $(`#${card_id} [data-toggle="tooltip"]`).tooltip();
   },
   computed: {
     hasAttributes: function() {
