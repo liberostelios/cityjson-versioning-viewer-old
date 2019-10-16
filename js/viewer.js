@@ -144,15 +144,18 @@ Vue.component('citymodel-viewer', {
     this.renderer.render( this.scene, this.camera );
   },
   watch: { 
-    citymodel: async function(newVal, oldVal) {
-      this.clearScene();
+    citymodel: {
+      handler: async function(newVal, oldVal) {
+        this.clearScene();
 
-      if (Object.keys(newVal).length > 0)
-      {
-        await this.loadCityObjects(newVal);
-      }
+        if (Object.keys(newVal).length > 0)
+        {
+          await this.loadCityObjects(newVal);
+        }
 
-      this.renderer.render(this.scene, this.camera);
+        this.renderer.render(this.scene, this.camera);
+      },
+      deep: true
     }
   },
   methods: {
