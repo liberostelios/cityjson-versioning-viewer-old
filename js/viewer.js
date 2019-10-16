@@ -19,7 +19,7 @@ Vue.component('cityobject', {
       <small v-show="'parents' in cityobject">Parents: <a :href="'#' + parent_id" v-for="parent_id in cityobject.parents" data-toggle="tooltip" data-placement="top" :title="parent_id"><i class="fas fa-cube text-danger mr-1"></i></a></small>
       <small v-show="'children' in cityobject">Children: <a :href="'#' + child_id" v-for="child_id in cityobject.children" data-toggle="tooltip" data-placement="top" :title="child_id"><i class="fas fa-cube text-success mr-1"></i></a></small>
     </div>
-    <div class="card-body collapse show" :id="cityobject_id + 'Body'">
+    <div class="card-body collapse show" :id="cityobject_id + 'Body'" v-if="hasAttributes || edit_mode">
       <dl class="row my-0" v-for="(value, key) in cityobject.attributes" v-show="edit_mode == false">
         <dt class="col-sm-4"><small class="font-weight-bold">{{ key }}</small></dt>
         <dd class="col-sm-8"><small>{{ value }}</small></dd>
@@ -32,6 +32,9 @@ Vue.component('cityobject', {
     $(`#${this.cityobject_id} [data-toggle="tooltip"]`).tooltip();
   },
   computed: {
+    hasAttributes: function() {
+      return "attributes" in this.cityobject && Object.keys(this.cityobject.attributes).length > 0;
+    },
     iconType: function() {
       type_icons = {
         "Building": ['fas', 'fa-building', 'text-danger', 'mr-1'],
