@@ -141,6 +141,8 @@ Vue.component('citymodel-viewer', {
     this.camera = null;
     this.renderer = null;
     this.controls = null;
+    this.raycaster = null;
+    this.mouse = null;
     this.geoms = {};
     this.meshes = [];
   },
@@ -153,6 +155,14 @@ Vue.component('citymodel-viewer', {
     }
         
     this.renderer.render( this.scene, this.camera );
+
+    let self = this;
+
+    $("#viewer").mousedown(function(eventData) {
+      if (eventData.button == 0) { //leftClick
+        self.handleClick(eventData)
+      }
+    });
   },
   watch: { 
     citymodel: {
@@ -170,6 +180,29 @@ Vue.component('citymodel-viewer', {
     }
   },
   methods: {
+    handleClick(e) {
+      var rect = this.renderer.domElement.getBoundingClientRect();
+      //get mouseposition
+      this.mouse.x = ((event.clientX - rect.left) / this.renderer.domElement.clientWidth) * 2 - 1;
+      this.mouse.y = -( (event.clientY - rect.top) / this.renderer.domElement.clientHeight) * 2 + 1;
+
+      //get cameraposition
+      this.raycaster.setFromCamera(this.mouse, this.camera);
+
+      //calculate intersects
+      var intersects = this.raycaster.intersectObjects(this.meshes);
+
+      //if clicked on nothing return
+      if (intersects.length == 0) {
+        return
+      }
+
+      //get the id of the first object that intersects (equals the clicked object)
+      var cityObjId = intersects[0].object.name;
+      console.log(cityObjId);
+      this.$root.move_to_object(cityObjId);
+      this.$root.$emit('clicked_obj', cityObjId);
+    },
     initScene() {
       this.scene = new THREE.Scene();
       var ratio = $("#viewer").width() / $("#viewer").height();
@@ -186,6 +219,10 @@ Vue.component('citymodel-viewer', {
       this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             
       let self = this;
+
+      // add raycaster and mouse (for clickable objects)
+      this.raycaster = new THREE.Raycaster()
+      this.mouse = new THREE.Vector2();
 
       //add AmbientLight (light that is only there that there's a minimum of light and you can see color)
       //kind of the natural daylight

@@ -17,6 +17,9 @@ var app = new Vue({
       }
     },
     methods: {
+      move_to_object(objid) {
+        window.location.href = "#" + objid;
+      },
       reset() {
         this.citymodel = {};
         this.search_term = "";
