@@ -3,6 +3,7 @@ var app = new Vue({
     data: {
       file_loaded: false,
       search_term: "",
+      filename: null,
       citymodel: {}
     },
     computed: {
@@ -55,10 +56,10 @@ var app = new Vue({
       
         document.body.removeChild(element);
       },
-      downloadVersion(vid) {
-        text = JSON.stringify(this.activeCityModel);
+      downloadModel() {
+        text = JSON.stringify(this.citymodel);
 
-        this.download(vid + ".json", text);
+        this.download("citymodel.json", text);
       }
     }
 })

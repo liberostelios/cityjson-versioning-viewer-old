@@ -16,7 +16,10 @@
     <div id="app" class="h-100">
       <nav class="navbar navbar-dark bg-dark">
           <a class="navbar-brand" href="#">CityJSON Viewer</a>
-          <input type="search" class="form-control col-2" placeholder="Search..." v-model="search_term" v-show="file_loaded">
+          <div class="form-inline col-auto" v-show="file_loaded">
+            <input type="search" class="form-control col" placeholder="Search..." v-model="search_term">
+            <button class="btn btn-primary col-auto ml-2" @click="downloadModel()"><i class="fas fa-download mr-1"></i> Download</button>
+          </div>
       </nav>
       <div v-if="file_loaded" class="h-100">
         <div class="container-fluid h-100">
