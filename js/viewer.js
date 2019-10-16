@@ -200,8 +200,7 @@ Vue.component('citymodel-viewer', {
       //get the id of the first object that intersects (equals the clicked object)
       var cityObjId = intersects[0].object.name;
       console.log(cityObjId);
-      this.$root.move_to_object(cityObjId);
-      this.$root.$emit('clicked_obj', cityObjId);
+      this.$root.$emit('object_clicked', cityObjId);
     },
     initScene() {
       this.scene = new THREE.Scene();

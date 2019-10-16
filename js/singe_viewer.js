@@ -5,6 +5,13 @@ var app = new Vue({
       search_term: "",
       citymodel: {}
     },
+    created() {
+      let self = this;
+
+      this.$root.$on('object_clicked', (objid) => {
+        self.move_to_object(objid);
+      });
+    },
     computed: {
       filteredCityObjects: function() {
         var result = _.pickBy(this.citymodel.CityObjects, function(value, key) {
