@@ -16,8 +16,8 @@ Vue.component('cityobject', {
           <a href="#" @click="edit_mode = !edit_mode"><i class="fas fa-pen mr-1" :class="[ edit_mode ? 'text-dark' : 'text-secondary' ]"></i></a>
         </div>
       </div>
-      <small v-show="'parents' in cityobject">Parents: <a :href="'#' + parent_id" v-for="parent_id in cityobject.parents" data-toggle="tooltip" data-placement="top" :title="parent_id"><i class="fas fa-cube text-danger mr-1"></i></a></small>
-      <small v-show="'children' in cityobject">Children: <a :href="'#' + child_id" v-for="child_id in cityobject.children" data-toggle="tooltip" data-placement="top" :title="child_id"><i class="fas fa-cube text-success mr-1"></i></a></small>
+      <small v-show="'parents' in cityobject">Parents: <a :href="'#' + parent_id" v-for="parent_id in cityobject.parents" data-toggle="tooltip" data-placement="top" :title="parent_id"><i class="text-danger" :class="getIconStyle(getObject(parent_id), false)"></i></a></small>
+      <small v-show="'children' in cityobject">Children: <a :href="'#' + child_id" v-for="child_id in cityobject.children" data-toggle="tooltip" data-placement="top" :title="child_id"><i class="text-success" :class="getIconStyle(getObject(child_id), false)"></i></a></small>
     </div>
     <div class="card-body collapse show" :id="cityobject_id + 'Body'" v-if="hasAttributes || edit_mode">
       <dl class="row my-0" v-for="(value, key) in cityobject.attributes" v-show="edit_mode == false">
@@ -42,6 +42,19 @@ Vue.component('cityobject', {
       return "attributes" in this.cityobject && Object.keys(this.cityobject.attributes).length > 0;
     },
     iconType: function() {
+      return this.getIconStyle(this.cityobject);
+    },
+    jsonString: {
+      get: function() {
+        return JSON.stringify(this.cityobject, undefined, 4);
+      }
+    }
+  },
+  methods: {
+    getObject(objid) {
+      return this.$root.citymodel.CityObjects[objid];
+    },
+    getIconStyle(cityobj, with_colour=true) {
       type_icons = {
         "Building": ['fas', 'fa-building', 'text-danger', 'mr-1'],
         "BuildingPart": ['far', 'fa-building', 'text-danger', 'mr-1'],
@@ -66,22 +79,20 @@ Vue.component('cityobject', {
         "WaterBody": ['fas', 'fa-water', 'text-primary', 'mr-1']
       };
 
-      if (this.cityobject.type in type_icons)
+      if (cityobj.type in type_icons)
       {
-        return type_icons[this.cityobject.type];
+        var icon_style = type_icons[cityobj.type];
+        if (!with_colour)
+        {
+          icon_style.splice(2, 1);
+        } 
+        return icon_style;
       }
       else
       {
         return ['fas', 'fa-question', 'text-secondary', 'mr-1'];
       }
     },
-    jsonString: {
-      get: function() {
-        return JSON.stringify(this.cityobject, undefined, 4);
-      }
-    }
-  },
-  methods: {
     saveChanges() {
       var card_id = $.escapeSelector(this.cityobject_id);
       var new_json = $(`#${card_id} #json_data`).val();
