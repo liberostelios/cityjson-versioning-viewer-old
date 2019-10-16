@@ -24,7 +24,12 @@ Vue.component('cityobject', {
         <dt class="col-sm-4"><small class="font-weight-bold">{{ key }}</small></dt>
         <dd class="col-sm-8"><small>{{ value }}</small></dd>
       </dl>
-      <textarea class="form-control" id="validationTextarea" v-model="jsonString" v-if="edit_mode"></textarea>
+      <div v-if="edit_mode">
+        <textarea id="json_data" class="form-control" v-model="jsonString"></textarea>
+        <div class="d-flex justify-content-end mt-2">
+          <button type="button" class="btn btn-success btn-sm" @click="saveChanges">Save</button>
+        </div>
+      </div>
     </div>
   </div>
   `,
@@ -73,10 +78,16 @@ Vue.component('cityobject', {
     jsonString: {
       get: function() {
         return JSON.stringify(this.cityobject, undefined, 4);
-      },
-      set: function(newValue) {
-        this.cityobject = JSON.parse(newValue);
       }
+    }
+  },
+  methods: {
+    saveChanges() {
+      var card_id = $.escapeSelector(this.cityobject_id);
+      var new_json = $(`#${card_id} #json_data`).val();
+      this.cityobject = JSON.parse(new_json);
+
+      this.$root.$emit('update_object', this.cityobject_id, this.cityobject);
     }
   }
 })
