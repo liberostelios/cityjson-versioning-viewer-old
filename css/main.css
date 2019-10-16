@@ -13,6 +13,10 @@ body{
   height: 100%;
 }
 
+#main_content {
+    height: calc(100% - 56px);
+}
+
 .version-id {
     font-weight: normal;
     color: #666;

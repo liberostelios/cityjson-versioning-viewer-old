@@ -22,7 +22,7 @@
             <button class="btn btn-danger col-auto ml-2" @click="reset()"><i class="fas fa-times mr-1"></i> Close</button>
           </div>
       </nav>
-      <div v-if="file_loaded" class="h-100">
+      <div id="main_content" v-if="file_loaded">
         <div class="container-fluid h-100">
           <div class="row h-100">
             <main class="col-12 col-xl-4 py-3 h-100 overflow-auto">
