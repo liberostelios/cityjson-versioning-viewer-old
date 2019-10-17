@@ -26,12 +26,13 @@
         <div class="container-fluid h-100">
           <div class="row h-100">
             <main class="col-12 col-xl-4 py-3 h-100 overflow-auto">
-              <h5>City Objects <span class="badge badge-secondary">{{ Object.keys(citymodel.CityObjects).length }}</span></h5>
+              <h5>City Objects <span class="badge badge-secondary">{{ Object.keys(citymodel.CityObjects).length }} total</span></h5>
               <cityobject
                 v-for="(cityobject, coid) in this.citymodel.CityObjects"
-                v-bind:cityobject="citymodel.CityObjects[coid]"
-                v-bind:cityobject_id="coid"
-                v-bind:key="coid"
+                :cityobject="citymodel.CityObjects[coid]"
+                :cityobject_id="coid"
+                :key="coid"
+                :selected="coid == selected_objid"
                 v-show="matches(coid, cityobject)"
                 @input="citymodel.CityObjects[coid] = arguments[0]"
               ></cityobject>

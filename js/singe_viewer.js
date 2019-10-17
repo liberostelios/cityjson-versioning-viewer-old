@@ -3,7 +3,8 @@ var app = new Vue({
     data: {
       file_loaded: false,
       search_term: "",
-      citymodel: {}
+      citymodel: {},
+      selected_objid: null,
     },
     created() {
       let self = this;
@@ -11,6 +12,11 @@ var app = new Vue({
       this.$root.$on('object_clicked', (objid) => {
         self.move_to_object(objid);
       });
+    },
+    watch: {
+      selected_objid: function() {
+        window.location.href = "#" + this.selected_objid;
+      }
     },
     computed: {
       filteredCityObjects: function() {
@@ -25,7 +31,7 @@ var app = new Vue({
     },
     methods: {
       move_to_object(objid) {
-        window.location.href = "#" + objid;
+        this.selected_objid = objid;
       },
       reset() {
         this.citymodel = {};

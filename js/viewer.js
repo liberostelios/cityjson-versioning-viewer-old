@@ -1,12 +1,12 @@
 Vue.component('cityobject', {
-  props: ['cityobject', 'cityobject_id'],
+  props: ['cityobject', 'cityobject_id', 'selected'],
   data() {
     return {
       edit_mode: false
     }
   },
   template: `
-  <div class="card mb-2 shadow" :id="cityobject_id">
+  <div class="card mb-2 shadow" :id="cityobject_id" :class="{ 'border-primary' : selected }">
     <div class="card-header">
       <div class="d-flex justify-content-between">
         <div>
@@ -199,7 +199,6 @@ Vue.component('citymodel-viewer', {
 
       //get the id of the first object that intersects (equals the clicked object)
       var cityObjId = intersects[0].object.name;
-      console.log(cityObjId);
       this.$root.$emit('object_clicked', cityObjId);
     },
     initScene() {
