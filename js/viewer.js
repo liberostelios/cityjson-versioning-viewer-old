@@ -104,7 +104,7 @@ Vue.component('cityobject', {
 })
 
 Vue.component('citymodel-viewer', {
-  props: ['citymodel'],
+  props: ['citymodel', 'selected_objid'],
   template: `
   <div id="viewer" class="col-12 px-0 h-100"></div>
   `,
@@ -145,6 +145,7 @@ Vue.component('citymodel-viewer', {
     this.mouse = null;
     this.geoms = {};
     this.meshes = [];
+    this.mesh_index = {};
   },
   async mounted() {
     this.initScene();
@@ -177,6 +178,20 @@ Vue.component('citymodel-viewer', {
         this.renderer.render(this.scene, this.camera);
       },
       deep: true
+    },
+    selected_objid: function(newId, oldId) {
+      if (oldId != null)
+      {
+        var coType = this.citymodel.CityObjects[oldId].type;
+        this.mesh_index[oldId].material.color.setHex(this.ALLCOLOURS[coType]);
+      }
+
+      if (newId != null)
+      {
+        this.mesh_index[newId].material.color.setHex(0xdda500);
+      }
+
+      this.renderer.render(this.scene, this.camera);
     }
   },
   methods: {
@@ -194,6 +209,7 @@ Vue.component('citymodel-viewer', {
 
       //if clicked on nothing return
       if (intersects.length == 0) {
+        this.$root.$emit('object_clicked', null);
         return
       }
 
@@ -341,6 +357,7 @@ Vue.component('citymodel-viewer', {
         coMesh.receiveShadow = true;
         this.scene.add(coMesh);
         this.meshes.push(coMesh);
+        this.mesh_index[_id] = coMesh;
       }
     },
       //convert json file to viwer-object
