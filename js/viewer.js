@@ -7,7 +7,7 @@ Vue.component('cityobject', {
     }
   },
   template: `
-  <div class="card mb-2 shadow" :id="cityobject_id" :class="{ 'border-primary' : selected }">
+  <div class="card mb-2" :id="cityobject_id" :class="{ 'border-primary' : selected }">
     <div class="card-header">
       <div class="d-flex justify-content-between">
         <div class="text-truncate">
