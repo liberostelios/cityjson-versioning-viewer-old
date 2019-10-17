@@ -3,7 +3,7 @@ Vue.component('cityobject', {
   data() {
     return {
       edit_mode: false,
-      collapsed: true,
+      collapsed: false,
     }
   },
   template: `
