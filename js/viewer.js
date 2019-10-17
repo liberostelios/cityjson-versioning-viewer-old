@@ -2,24 +2,26 @@ Vue.component('cityobject', {
   props: ['cityobject', 'cityobject_id', 'selected'],
   data() {
     return {
-      edit_mode: false
+      edit_mode: false,
+      collapsed: true,
     }
   },
   template: `
   <div class="card mb-2 shadow" :id="cityobject_id" :class="{ 'border-primary' : selected }">
     <div class="card-header">
       <div class="d-flex justify-content-between">
-        <div>
-          <a href="#" id="objicon" data-toggle="tooltip" data-placement="top" :title="cityobject.type"><i v-bind:class="iconType"></i></a> <a :href="'#' + cityobject_id + 'Body'" class="text-dark text-decoration-none" data-toggle="collapse">{{ cityobject_id }}</a>
+        <div class="text-truncate">
+          <a href="#" id="objicon" data-toggle="tooltip" data-placement="top" :title="cityobject.type"><i v-bind:class="iconType"></i></a> <a href="#" @click="select_this" class="text-dark text-decoration-none" >{{ cityobject_id }}</a>
         </div>
-        <div>
+        <div class="col-auto p-0">
+          <a href="#" @click="collapsed = !collapsed"><i class="fas text-secondary mr-1" :class="[ collapsed ? 'fa-minus' : 'fa-plus' ]"></i></a>
           <a href="#" @click="edit_mode = !edit_mode"><i class="fas fa-pen mr-1" :class="[ edit_mode ? 'text-dark' : 'text-secondary' ]"></i></a>
         </div>
       </div>
       <small v-show="'parents' in cityobject">Parents: <a :href="'#' + parent_id" v-for="parent_id in cityobject.parents" data-toggle="tooltip" data-placement="top" :title="parent_id"><i class="text-danger" :class="getIconStyle(getObject(parent_id), false)"></i></a></small>
       <small v-show="'children' in cityobject">Children: <a :href="'#' + child_id" v-for="child_id in cityobject.children" data-toggle="tooltip" data-placement="top" :title="child_id"><i class="text-success" :class="getIconStyle(getObject(child_id), false)"></i></a></small>
     </div>
-    <div class="card-body collapse show" :id="cityobject_id + 'Body'" v-if="hasAttributes || edit_mode">
+    <div class="card-body collapse show" :id="cityobject_id + 'Body'" v-if="hasAttributes && collapsed || edit_mode">
       <dl class="row my-0" v-for="(value, key) in cityobject.attributes" v-show="edit_mode == false">
         <dt class="col-sm-4"><small class="font-weight-bold">{{ key }}</small></dt>
         <dd class="col-sm-8"><small>{{ value }}</small></dd>
@@ -51,6 +53,9 @@ Vue.component('cityobject', {
     }
   },
   methods: {
+    select_this() {
+      this.$root.$emit('object_clicked', this.cityobject_id);
+    },
     getObject(objid) {
       return this.$root.citymodel.CityObjects[objid];
     },
