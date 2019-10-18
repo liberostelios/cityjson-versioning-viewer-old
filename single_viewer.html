@@ -17,7 +17,7 @@
       <nav class="navbar navbar-dark bg-dark">
           <a class="navbar-brand" href="#">CityJSON Viewer</a>
           <div class="form-inline col-auto" v-show="file_loaded">
-            <input type="search" class="form-control col" placeholder="Search..." v-model="search_term">
+            <input type="search" class="form-control col" placeholder="Search for object..." v-model="search_term">
             <button class="btn btn-primary col-auto ml-2" @click="downloadModel()"><i class="fas fa-download mr-1"></i> Download</button>
             <button class="btn btn-danger col-auto ml-2" @click="reset()"><i class="fas fa-times mr-1"></i> Close</button>
           </div>
@@ -27,14 +27,21 @@
           <div class="row h-100">
             <main class="col-12 col-xl-4 py-3 h-100 overflow-auto">
               <h5>City Objects <span class="badge badge-secondary">{{ Object.keys(citymodel.CityObjects).length }} total</span></h5>
+              <lu class="list-unstyled">
+                <cityobject-tree-item
+                  v-for="(cityobject, coid) in citymodel.CityObjects"
+                  :item="cityobject"
+                  :cityobject_id="coid"
+                  :key="coid"
+                  :selected="coid == selected_objid"
+                  v-if="!(cityobject.parents && cityobject.parents.length > 0)"
+                  v-show="matches(coid, cityobject)"
+                ></cityobject-tree-item>  
+              </lu>
               <cityobject
-                v-for="(cityobject, coid) in this.citymodel.CityObjects"
-                :cityobject="citymodel.CityObjects[coid]"
-                :cityobject_id="coid"
-                :key="coid"
-                :selected="coid == selected_objid"
-                v-show="matches(coid, cityobject)"
-                @input="citymodel.CityObjects[coid] = arguments[0]"
+                :cityobject="citymodel.CityObjects[selected_objid]"
+                :cityobject_id="selected_objid"
+                :v-if="selected_objid"
               ></cityobject>
             </main>
             <div class="col-12 col-xl-8 p-0 h-100">

@@ -1,3 +1,110 @@
+// define the tree-item component
+Vue.component('cityobject-tree-item', {
+  template: `
+  <li :id="cityobject_id">
+    <div
+      @click="toggle">
+      <span v-if="isFolder"><i class="far" v-bind:class="[ isOpen ? 'fa-minus-square' : 'fa-plus-square' ]"></i></span>
+      <span v-else><i class="far fa-square text-secondary"></i></span>
+      <a href="#" id="objicon" data-toggle="tooltip" data-placement="top" :title="item.type"><i v-bind:class="iconType"></i></a>
+      <a href="#" class="text-dark text-decoration-none" @click="select_this"><span :class="{ 'text-primary' : selected }">{{ cityobject_id }}</span></a>
+      <span class="badge badge-primary mr-1" v-for="geom in item.geometry" v-if="geom.lod"><i class="fas fa-cube mr-1"></i>{{ geom.lod }}</span>
+      <span class="badge badge-secondary mr-1" v-for="geom in item.geometry" v-if="geom.type == 'GeometryInstance'"><i class="fas fa-external-link-alt"></i></span>
+    </div>
+    <ul v-show="isOpen" v-if="isFolder">
+      <cityobject-tree-item
+        class="item"
+        v-for="child_id in item.children"
+        :key="child_id"
+        :item="getObject(child_id)"
+        :cityobject_id="child_id"
+      ></tree-item>
+    </ul>
+  </li>
+  `,
+  props: {
+    item: Object,
+    cityobject_id: String,
+    selected: Boolean
+  },
+  data: function () {
+    return {
+      isOpen: false
+    }
+  },
+  async mounted() {
+    var card_id = $.escapeSelector(this.cityobject_id);
+    $(`#${card_id} [data-toggle="tooltip"]`).tooltip();
+  },
+  computed: {
+    isFolder: function () {
+      return this.item.children &&
+        this.item.children.length
+    },
+    iconType: function() {
+      return this.getIconStyle(this.item);
+    },
+  },
+  methods: {
+    select_this() {
+      this.$root.$emit('object_clicked', this.cityobject_id);
+    },
+    toggle: function () {
+      if (this.isFolder) {
+        this.isOpen = !this.isOpen
+      }
+    },
+    makeFolder: function () {
+      if (!this.isFolder) {
+      	this.$emit('make-folder', this.item)
+        this.isOpen = true
+      }
+    },
+    getObject(objid) {
+      return this.$root.citymodel.CityObjects[objid];
+    },
+    getIconStyle(cityobj, with_colour=true) {
+      type_icons = {
+        "Building": ['fas', 'fa-building', 'text-danger', 'mr-1'],
+        "BuildingPart": ['far', 'fa-building', 'text-danger', 'mr-1'],
+        "BuildingInstallation": ['fas', 'fa-city', 'text-danger', 'mr-1'],
+        "Bridge": ['fas', 'fa-archway', 'text-dark', 'mr-1'],
+        "BridgePart": ['fas', 'fa-archway', 'text-secondary', 'mr-1'],
+        "BridgeInstallation": ['fas', 'fa-archway', 'text-primary', 'mr-1'],
+        "BridgeConstructionElement": ['fas', 'fa-archway', 'text-warning', 'mr-1'],
+        "CityObjectGroup": ['fas', 'fa-cubes', 'text-dark', 'mr-1'],
+        "CityFurniture": ['fas', 'fa-store-alt', 'text-danger', 'mr-1'],
+        "GenericCityObject": ['fas', 'fa-cube', 'text-danger', 'mr-1'],
+        "LandUse": ['fas', 'fa-chart-area', 'text-success', 'mr-1'],
+        "PlantCover": ['fas', 'fa-leaf', 'text-success', 'mr-1'],
+        "Railway": ['fas', 'fa-train', 'text-primary', 'mr-1'],
+        "Road": ['fas', 'fa-road', 'text-dark', 'mr-1'],
+        "SolitaryVegetationObject": ['fas', 'fa-tree', 'text-success', 'mr-1'],
+        "TINRelief": ['fas', 'fa-mountain', 'text-success', 'mr-1'],
+        "TransportSquare": ['fas', 'fa-circle-notch', 'text-dark', 'mr-1'],
+        "Tunnel": ['fas', 'fa-dot-circle', 'text-dark', 'mr-1'],
+        "TunnelPart": ['fas', 'fa-dot-circle', 'text-dark', 'mr-1'],
+        "TunnelInstallation": ['fas', 'fa-dot-circle', 'text-warning', 'mr-1'],
+        "WaterBody": ['fas', 'fa-water', 'text-primary', 'mr-1']
+      };
+
+      if (cityobj.type in type_icons)
+      {
+        var icon_style = type_icons[cityobj.type];
+        if (!with_colour)
+        {
+          icon_style.splice(2, 1);
+        } 
+        return icon_style;
+      }
+      else
+      {
+        return ['fas', 'fa-question', 'text-secondary', 'mr-1'];
+      }
+    },
+  }
+})
+
 Vue.component('cityobject', {
   props: ['cityobject', 'cityobject_id', 'selected'],
   data() {
