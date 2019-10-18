@@ -2,7 +2,7 @@ if (!Element.prototype.scrollIntoViewIfNeeded) {
   Element.prototype.scrollIntoViewIfNeeded = function (centerIfNeeded) {
     centerIfNeeded = arguments.length === 0 ? true : !!centerIfNeeded;
 
-    var parent = this.parentNode,
+    var parent = getParent(this),
         parentComputedStyle = window.getComputedStyle(parent, null),
         parentBorderTopWidth = parseInt(parentComputedStyle.getPropertyValue('border-top-width')),
         parentBorderLeftWidth = parseInt(parentComputedStyle.getPropertyValue('border-left-width')),
@@ -26,6 +26,18 @@ if (!Element.prototype.scrollIntoViewIfNeeded) {
   };
 }
 
+function getParent(el) {
+  var parent = el.parentNode;
+
+  if (parent === document) {
+      return document;
+ } else if (parent.offsetHeight < parent.scrollHeight || parent.offsetWidth < parent.scrollWidth) {
+      return parent;
+  } else {
+      return getParent(parent);
+  }
+}
+
 var app = new Vue({
     el: '#app',
     data: {
@@ -46,7 +58,7 @@ var app = new Vue({
         if (this.selected_objid != null)
         {
           var card_id = $.escapeSelector(this.selected_objid);
-          $(`#${card_id}`)[0].scrollIntoView();
+          $(`#${card_id}`)[0].scrollIntoViewIfNeeded();
         }
       }
     },
