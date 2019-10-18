@@ -138,10 +138,14 @@ Vue.component('cityobject', {
       <small v-show="'children' in cityobject">Children: <a :href="'#' + child_id" v-for="child_id in cityobject.children" data-toggle="tooltip" data-placement="top" :title="child_id"><i class="text-success" :class="getIconStyle(getObject(child_id), false)"></i></a></small>
     </div>
     <div class="card-body collapse show" :id="cityobject_id + 'Body'" v-if="hasAttributes && expanded || edit_mode">
-      <dl class="row my-0" v-for="(value, key) in cityobject.attributes" v-show="edit_mode == false">
-        <dt class="col-sm-4"><small class="font-weight-bold">{{ key }}</small></dt>
-        <dd class="col-sm-8"><small>{{ value }}</small></dd>
-      </dl>
+      <table class="table table-striped overflow-auto" v-show="edit_mode == false">
+        <tbody>
+          <tr v-for="(value, key) in cityobject.attributes">
+            <th scope="row" class="py-1"><small class="font-weight-bold">{{ key }}</small></th>
+            <td class="py-1"><small>{{ value }}</small></td>
+          </tr>
+        </tbody>
+      </table>
       <div v-if="edit_mode">
         <textarea id="json_data" class="form-control" v-model="jsonString"></textarea>
         <div class="d-flex justify-content-end mt-2">
