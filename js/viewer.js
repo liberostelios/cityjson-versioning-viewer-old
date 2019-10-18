@@ -2,9 +2,8 @@
 Vue.component('cityobject-tree-item', {
   template: `
   <li :id="cityobject_id">
-    <div
-      @click="toggle">
-      <span v-if="isFolder"><i class="far" v-bind:class="[ isOpen ? 'fa-minus-square' : 'fa-plus-square' ]"></i></span>
+    <div>
+      <a href="#" @click="toggle" v-if="isFolder"><i class="far text-dark text-decoration-none" v-bind:class="[ isOpen ? 'fa-minus-square' : 'fa-plus-square' ]"></i></a>
       <span v-else><i class="far fa-square text-secondary"></i></span>
       <a href="#" id="objicon" data-toggle="tooltip" data-placement="top" :title="item.type"><i v-bind:class="iconType"></i></a>
       <a href="#" class="text-dark text-decoration-none" @click="select_this"><span :class="{ 'text-primary' : selected }">{{ cityobject_id }}</span></a>
