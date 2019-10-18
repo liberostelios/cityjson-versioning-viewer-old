@@ -46,6 +46,7 @@ var app = new Vue({
       citymodel: {},
       selected_objid: null,
       loading: false,
+      error_message: null
     },
     created() {
       let self = this;
@@ -108,7 +109,8 @@ var app = new Vue({
         let file = this.$refs.cityJSONFile.files[0];
         if (!file || file.type != "application/json")
         {
-          console.log("This is not a JSON file at all!!!");
+          this.error_message = "This is not a JSON file!";
+          this.loading = false;
           return;
         }
 
