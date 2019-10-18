@@ -93,7 +93,14 @@ var app = new Vue({
       matches(coid, cityobject) {
         var regex = RegExp(this.search_term, "i");
         var obj_json = JSON.stringify(cityobject);
-        return regex.test(coid) | regex.test(obj_json);
+        if (cityobject.children && cityobject.children.length > 0)
+        {
+          return regex.test(coid) || regex.test(obj_json) || cityobject.children.some(obj_id => { return this.matches( obj_id, this.citymodel.CityObjects[obj_id] ) });
+        }
+        else
+        {
+          return regex.test(coid) || regex.test(obj_json);
+        }
       },
       async selectedFile() {
         this.loading = true;
