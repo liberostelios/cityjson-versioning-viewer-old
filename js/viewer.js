@@ -131,7 +131,7 @@ Vue.component('cityobject', {
           <a href="#" id="objicon" data-toggle="tooltip" data-placement="top" :title="cityobject.type"><i v-bind:class="iconType"></i></a> <a href="#" @click="select_this" class="text-dark text-decoration-none mr-5" >{{ cityobject_id }}</a>
         </div>
         <div class="col-auto p-0">
-          <a href="#" @click="expanded = !expanded"><i class="fas text-secondary mr-1" :class="[ expanded ? 'fa-minus' : 'fa-plus' ]"></i></a>
+          <a href="#" @click="expanded = !expanded" v-if="hasAttributes"><i class="fas text-secondary mr-1" :class="[ expanded ? 'fa-minus' : 'fa-plus' ]"></i></a>
           <a href="#" @click="edit_mode = !edit_mode"><i class="fas fa-pen mr-1" :class="[ edit_mode ? 'text-dark' : 'text-secondary' ]"></i></a>
         </div>
       </div>
