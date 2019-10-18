@@ -15,11 +15,9 @@
   <body>
     <div id="app" class="h-100">
       <nav class="navbar navbar-dark bg-dark">
-        <div class="form-inline col-auto p-0">
-          <a class="navbar-brand" href="#">CityJSON Viewer</a>
-          <div class="spinner-border text-warning" role="status" v-show="loading">
-            <span class="sr-only">Loading...</span>
-          </div>
+        <a class="navbar-brand" href="#">CityJSON Viewer</a>
+        <div class="spinner-border text-white" role="status" v-show="loading">
+          <span class="sr-only">Loading...</span>
         </div>
       </nav>
       <div id="main_content" v-if="file_loaded">
