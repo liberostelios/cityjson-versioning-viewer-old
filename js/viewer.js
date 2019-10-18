@@ -106,11 +106,21 @@ Vue.component('cityobject-tree-item', {
 })
 
 Vue.component('cityobject', {
-  props: ['cityobject', 'cityobject_id', 'selected'],
+  props: {
+    cityobject: Object,
+    cityobject_id: String,
+    selected: {
+      type: Boolean,
+      default: false
+    },
+    expanded: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       edit_mode: false,
-      collapsed: false,
     }
   },
   template: `
@@ -121,14 +131,14 @@ Vue.component('cityobject', {
           <a href="#" id="objicon" data-toggle="tooltip" data-placement="top" :title="cityobject.type"><i v-bind:class="iconType"></i></a> <a href="#" @click="select_this" class="text-dark text-decoration-none" >{{ cityobject_id }}</a>
         </div>
         <div class="col-auto p-0">
-          <a href="#" @click="collapsed = !collapsed"><i class="fas text-secondary mr-1" :class="[ collapsed ? 'fa-minus' : 'fa-plus' ]"></i></a>
+          <a href="#" @click="expanded = !expanded"><i class="fas text-secondary mr-1" :class="[ expanded ? 'fa-minus' : 'fa-plus' ]"></i></a>
           <a href="#" @click="edit_mode = !edit_mode"><i class="fas fa-pen mr-1" :class="[ edit_mode ? 'text-dark' : 'text-secondary' ]"></i></a>
         </div>
       </div>
       <small v-show="'parents' in cityobject">Parents: <a :href="'#' + parent_id" v-for="parent_id in cityobject.parents" data-toggle="tooltip" data-placement="top" :title="parent_id"><i class="text-danger" :class="getIconStyle(getObject(parent_id), false)"></i></a></small>
       <small v-show="'children' in cityobject">Children: <a :href="'#' + child_id" v-for="child_id in cityobject.children" data-toggle="tooltip" data-placement="top" :title="child_id"><i class="text-success" :class="getIconStyle(getObject(child_id), false)"></i></a></small>
     </div>
-    <div class="card-body collapse show" :id="cityobject_id + 'Body'" v-if="hasAttributes && collapsed || edit_mode">
+    <div class="card-body collapse show" :id="cityobject_id + 'Body'" v-if="hasAttributes && expanded || edit_mode">
       <dl class="row my-0" v-for="(value, key) in cityobject.attributes" v-show="edit_mode == false">
         <dt class="col-sm-4"><small class="font-weight-bold">{{ key }}</small></dt>
         <dd class="col-sm-8"><small>{{ value }}</small></dd>
