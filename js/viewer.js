@@ -269,34 +269,46 @@ Vue.component('citymodel-viewer', {
     this.mesh_index = {};
   },
   async mounted() {
-    this.initScene();
+    this.$root.$emit('rendering', true);
 
-    if (Object.keys(this.citymodel).length > 0)
-    {
-      await this.loadCityObjects(this.citymodel);
-    }
-        
-    this.renderer.render( this.scene, this.camera );
+    setTimeout(async _ => {
+      this.initScene();
 
-    let self = this;
-
-    $("#viewer").dblclick(function(eventData) {
-      if (eventData.button == 0) { //leftClick
-        self.handleClick(eventData)
+      if (Object.keys(this.citymodel).length > 0)
+      {
+        await this.loadCityObjects(this.citymodel);
       }
-    });
+          
+      this.renderer.render( this.scene, this.camera );
+
+      let self = this;
+
+      $("#viewer").dblclick(function(eventData) {
+        if (eventData.button == 0) { //leftClick
+          self.handleClick(eventData)
+        }
+      });
+
+      this.$root.$emit('rendering', false);
+    }, 25);
   },
   watch: { 
     citymodel: {
       handler: async function(newVal, oldVal) {
-        this.clearScene();
+        this.$root.$emit('rendering', true);
 
-        if (Object.keys(newVal).length > 0)
-        {
-          await this.loadCityObjects(newVal);
-        }
+        setTimeout(async _ => {
+          this.clearScene();
 
-        this.renderer.render(this.scene, this.camera);
+          if (Object.keys(newVal).length > 0)
+          {
+            await this.loadCityObjects(newVal);
+          }
+
+          this.renderer.render(this.scene, this.camera);
+    
+          this.$root.$emit('rendering', false);
+        }, 25);
       },
       deep: true
     },

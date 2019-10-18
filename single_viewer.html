@@ -15,12 +15,17 @@
   <body>
     <div id="app" class="h-100">
       <nav class="navbar navbar-dark bg-dark">
+        <div class="form-inline col-auto p-0">
           <a class="navbar-brand" href="#">CityJSON Viewer</a>
-          <div class="form-inline col-auto" v-show="file_loaded">
-            <input type="search" class="form-control col" placeholder="Search for object..." v-model="search_term">
-            <button class="btn btn-primary col-auto ml-2" @click="downloadModel()"><i class="fas fa-download mr-1"></i> Download</button>
-            <button class="btn btn-danger col-auto ml-2" @click="reset()"><i class="fas fa-times mr-1"></i> Close</button>
+          <div class="spinner-border text-warning" role="status" v-show="loading">
+            <span class="sr-only">Loading...</span>
           </div>
+        </div>
+        <div class="form-inline col-auto p-0" v-show="file_loaded">
+          <input type="search" class="form-control col" placeholder="Search for object..." v-model="search_term">
+          <button class="btn btn-primary col-auto ml-2" @click="downloadModel()"><i class="fas fa-download mr-1"></i> Download</button>
+          <button class="btn btn-danger col-auto ml-2" @click="reset()"><i class="fas fa-times mr-1"></i> Close</button>
+        </div>
       </nav>
       <div id="main_content" v-if="file_loaded">
         <div class="container-fluid h-100">

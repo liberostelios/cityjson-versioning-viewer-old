@@ -45,12 +45,17 @@ var app = new Vue({
       search_term: "",
       citymodel: {},
       selected_objid: null,
+      loading: false,
     },
     created() {
       let self = this;
 
       this.$root.$on('object_clicked', (objid) => {
         self.move_to_object(objid);
+      });
+
+      this.$root.$on('rendering', (status) => {
+        self.loading = status;
       });
     },
     watch: {
@@ -90,9 +95,8 @@ var app = new Vue({
         var obj_json = JSON.stringify(cityobject);
         return regex.test(coid) | regex.test(obj_json);
       },
-      selectedFile() {
-        console.log("Selected a CityJSON file...");
-        console.log(this.$refs.cityJSONFile.files[0]);
+      async selectedFile() {
+        this.loading = true;
 
         let file = this.$refs.cityJSONFile.files[0];
         if (!file || file.type != "application/json")
@@ -109,6 +113,8 @@ var app = new Vue({
           this.citymodel = cm;
 
           this.file_loaded = true;
+
+          this.loading = false;
         }
       },
       download(filename, text) {
