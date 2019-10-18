@@ -281,7 +281,7 @@ Vue.component('citymodel-viewer', {
 
     let self = this;
 
-    $("#viewer").mousedown(function(eventData) {
+    $("#viewer").dblclick(function(eventData) {
       if (eventData.button == 0) { //leftClick
         self.handleClick(eventData)
       }
