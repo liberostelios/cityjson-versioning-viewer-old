@@ -128,7 +128,7 @@ Vue.component('cityobject', {
     <div class="card-header">
       <div class="d-flex justify-content-between">
         <div class="text-truncate">
-          <a href="#" id="objicon" data-toggle="tooltip" data-placement="top" :title="cityobject.type"><i v-bind:class="iconType"></i></a> <a href="#" @click="select_this" class="text-dark text-decoration-none" >{{ cityobject_id }}</a>
+          <a href="#" id="objicon" data-toggle="tooltip" data-placement="top" :title="cityobject.type"><i v-bind:class="iconType"></i></a> <a href="#" @click="select_this" class="text-dark text-decoration-none mr-5" >{{ cityobject_id }}</a>
         </div>
         <div class="col-auto p-0">
           <a href="#" @click="expanded = !expanded"><i class="fas text-secondary mr-1" :class="[ expanded ? 'fa-minus' : 'fa-plus' ]"></i></a>

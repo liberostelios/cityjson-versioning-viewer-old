@@ -38,13 +38,17 @@
                   v-show="matches(coid, cityobject)"
                 ></cityobject-tree-item>  
               </lu>
-              <cityobject
-                :cityobject="citymodel.CityObjects[selected_objid]"
-                :cityobject_id="selected_objid"
-                :v-if="selected_objid"
-              ></cityobject>
             </main>
             <div class="col-12 col-xl-8 p-0 h-100">
+              <div class="col-auto m-2 =0" style="position: absolute; z-index: 1">
+                <cityobject
+                  :cityobject="citymodel.CityObjects[selected_objid]"
+                  @input="citymodel.CityObjects[selected_objid] = arguments[0]"
+                  :cityobject_id="selected_objid"
+                  :expanded=true
+                  v-if="existsSelected"
+                ></cityobject>
+              </div>
               <citymodel-viewer
                 v-bind:citymodel="citymodel"
                 :selected_objid="selected_objid"

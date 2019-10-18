@@ -43,14 +43,11 @@ var app = new Vue({
     },
     watch: {
       selected_objid: function() {
-        if (this.selected_objid == null)
+        if (this.selected_objid != null)
         {
-          return;
+          var card_id = $.escapeSelector(this.selected_objid);
+          $(`#${card_id}`)[0].scrollIntoView();
         }
-
-        var card_id = $.escapeSelector(this.selected_objid);
-        console.log($(`#${card_id}`));
-        $(`#${card_id}`)[0].scrollIntoView();
       }
     },
     computed: {
@@ -62,6 +59,9 @@ var app = new Vue({
         });
 
         return result;
+      },
+      existsSelected: function() {
+        return this.selected_objid != null;
       }
     },
     methods: {
