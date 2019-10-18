@@ -13,11 +13,38 @@
     <title>CityJSON viewer</title>
   </head>
   <body>
+    <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModelLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="helpModelLabel"><i class="far fa-question-circle mr-1"></i> Help</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            What a wonderful viewer! Here is what you can do:
+            <ul>
+              <li>Click on an object ID in the tree view on the left to select it.</li>
+              <li>Double-click on an object in the 3D view to select it.</li>
+              <li>When an object is selected you see a card with it's information (oh, wow)!</li>
+              <li>Toggle the editing mode with the <i class="fas fa-pen mx-1 text-muted"></i> icon to edit it. Then save the changes</li>
+              <li>Download the city model with your changes by clicking on <b>Download</b>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="app" class="h-100">
       <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">CityJSON Viewer</a>
-        <div class="spinner-border text-white" role="status" v-show="loading">
-          <span class="sr-only">Loading...</span>
+        <div class="d-flex justify-content-end align-items-center col-auto p-0">
+          <div class="spinner-border text-warning mr-2" role="status" v-show="loading">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#helpModal">
+            <i class="far fa-question-circle mr-1"></i> Help
+          </button>
         </div>
       </nav>
       <div id="main_content" v-if="file_loaded">
