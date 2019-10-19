@@ -7,7 +7,7 @@ Vue.component('cityobject-tree-item', {
       <span v-else><i class="far fa-square text-secondary"></i></span>
       <a href="#" id="objicon" data-toggle="tooltip" data-placement="top" :title="item.type"><i v-bind:class="iconType"></i></a>
       <a href="#" class="text-dark text-decoration-none" @click="select_this"><span :class="{ 'text-primary' : selected }">{{ cityobject_id }}</span></a>
-      <span class="badge badge-primary mr-1" v-for="geom in item.geometry" v-if="geom.lod"><i class="fas fa-cube mr-1"></i>{{ geom.lod }}</span>
+      <a href="#" data-toggle="tooltip" data-placement="top" class="badge badge-primary mr-1" v-for="geom in item.geometry" :title="geom.type" v-if="geom.lod"><i :class="getGeometryIcon(geom.type)" class="mr-1"></i><small>{{ geom.lod }}</small></a>
       <span class="badge badge-secondary mr-1" v-for="geom in item.geometry" v-if="geom.type == 'GeometryInstance'"><i class="fas fa-external-link-alt"></i></span>
     </div>
     <ul v-show="isOpen" v-if="isFolder">
@@ -61,6 +61,22 @@ Vue.component('cityobject-tree-item', {
     },
     getObject(objid) {
       return this.$root.citymodel.CityObjects[objid];
+    },
+    getGeometryIcon(geom_type) {
+      geometry_icons = {
+        "MultiSurface": ['fas', 'fa-map'],
+        "Solid": ['fas', 'fa-cube'],
+        "MultiSolid": ['fas', 'fa-cubes']
+      }
+
+      if (geom_type in geometry_icons)
+      {
+        return geometry_icons[geom_type];
+      }
+      else
+      {
+        return ['fas', 'fa-question'];
+      }
     },
     getIconStyle(cityobj, with_colour=true) {
       type_icons = {
@@ -138,7 +154,7 @@ Vue.component('cityobject', {
       <small v-show="'children' in cityobject">Children: <a :href="'#' + child_id" v-for="child_id in cityobject.children" data-toggle="tooltip" data-placement="top" :title="child_id"><i class="text-success" :class="getIconStyle(getObject(child_id), false)"></i></a></small>
     </div>
     <div class="card-body collapse show" :id="cityobject_id + 'Body'" v-if="hasAttributes && expanded || edit_mode">
-      <table class="table table-striped overflow-auto" v-show="edit_mode == false">
+      <table class="table table-striped table-borderless overflow-auto" v-show="edit_mode == false">
         <tbody>
           <tr v-for="(value, key) in cityobject.attributes">
             <th scope="row" class="py-1"><small class="font-weight-bold">{{ key }}</small></th>
