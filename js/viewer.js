@@ -10,13 +10,14 @@ Vue.component('cityobject-tree-item', {
       <a href="#" data-toggle="tooltip" data-placement="top" class="badge badge-primary mr-1" v-for="geom in item.geometry" :title="geom.type" v-if="geom.lod"><i :class="getGeometryIcon(geom.type)" class="mr-1"></i><small>{{ geom.lod }}</small></a>
       <span class="badge badge-secondary mr-1" v-for="geom in item.geometry" v-if="geom.type == 'GeometryInstance'"><i class="fas fa-external-link-alt"></i></span>
     </div>
-    <ul v-show="isOpen" v-if="isFolder">
+    <ul class="list-unstyled ml-4 mb-0" v-show="isOpen" v-if="isFolder">
       <cityobject-tree-item
         class="item"
         v-for="child_id in item.children"
         :key="child_id"
         :item="getObject(child_id)"
         :cityobject_id="child_id"
+        :selected="child_id == selected_objid"
       ></tree-item>
     </ul>
   </li>
@@ -43,6 +44,9 @@ Vue.component('cityobject-tree-item', {
     iconType: function() {
       return this.getIconStyle(this.item);
     },
+    selected_objid: function() {
+      return this.$root.selected_objid;
+    }
   },
   methods: {
     select_this() {
